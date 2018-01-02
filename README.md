@@ -46,6 +46,7 @@ bower install
 ### Roadmap
 
 View the project roadmap [here](https://waffle.io/hrnyc12-plato/hrnyc12-plato)
+
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/hrnyc12-plato/hrnyc12-plato.svg?columns=all)](https://waffle.io/hrnyc12-plato/hrnyc12-plato)
 
 ## Contributing
