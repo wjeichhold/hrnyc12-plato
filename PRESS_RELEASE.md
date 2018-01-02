@@ -1,4 +1,4 @@
-# Project Name #
+# WAYN #
 
 <!-- 
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -17,28 +17,28 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+  > WAYN - Where Are You Now
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  > WAYN is to for people to plan an event and share their distance from the event location.
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  > WAYN will allow people to send out event invites, with a time and location in which attendees can accept and share their location on route.
 
 ## Problem ##
-  > Describe the problem your product solves.
+  > How many times have you made an event to have everyone arrive fashionably late. Are you tired of being the first one to the party? How many times have you asked all your friends "Hey, how far are you?", "What is your ETA?", "Are you really on your way or are you still at home?"
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  > WAYN will provide a visual map that will show each attendees current location and ETA once they share their geolocation. 
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  > "Be fashionably on time" - Someone
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  > A person just needs to pick a time and location and send out an event invite to all of the attendees. Once the attendees recieve the invite and start sharing their location, they will be able to see the current location of all the other attendees.
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  > "All my friends have been showing up on time to my events!" - Someone
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  > Visit ______ plan your meetup now!
