@@ -22,8 +22,10 @@ class LandingPage extends React.Component {
       <h1>WAYN</h1>
       <Link to='/create'><button>Create Event</button></Link>
       <h3>OR</h3>
-      Enter your event ID: 
-      <input type="text" onChange={this.handleIdChange} />
+      <label>
+        Enter your event ID: 
+        <input type="text" value={this.state.eventId} onChange={this.handleIdChange} />
+      </label>
       <Link to={'/event/' + this.state.eventId}><button>Submit</button></Link>
     </div>
     )
