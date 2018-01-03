@@ -2,21 +2,15 @@ const Sequelize = require('sequelize');
 const sequelize = new Sequelize('WAYN_HRNYC12', 'Administrator', 'bananas18', {
   host: 'wayn.ccpnt53lucxn.us-east-2.rds.amazonaws.com',
   dialect: 'mysql',
-
   pool: {
     max: 5,
     min: 0,
     acquire: 30000,
     idle: 10000
   },
-
-  // SQLite only
-  storage: 'path/to/database.sqlite',
-
   // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
   operatorsAliases: false
 });
-
 
 const User = sequelize.define('user', {
   id: {
@@ -51,7 +45,6 @@ sequelize.sync({force: true})
   }))
   .then(jane => {
     console.log(jane.toJSON());
-  });
 
 sequelize.sync({force: true})
   .then(() => Event.create({
