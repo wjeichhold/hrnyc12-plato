@@ -41,4 +41,4 @@ bookshelf.knex.schema.hasTable('events').then(function(exists) {
       console.log('Created events tables', table)
     })
   }
-})
+});
