@@ -1,10 +1,9 @@
 import React from 'react';
+var keys = require('../../../config');
 const _ = require("lodash");
 const { compose, withProps, lifecycle } = require("recompose");
 const { withScriptjs, withGoogleMap, GoogleMap, Marker} = require("react-google-maps");
 const { SearchBox } = require("react-google-maps/lib/components/places/SearchBox");
-var keys = require('../../../config');
-
 
 const MapWithASearchBox = compose(
     withProps({
