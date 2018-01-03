@@ -1,56 +1,58 @@
-var mysql = require('mysql');
-
-
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('eventsdb', 'awuser', 'testpass', {
-  host: 'mydbinstance.ci9qnmyzcttt.us-east-1.rds.amazonaws.com',
+const sequelize = new Sequelize('WAYN_HRNYC12', 'Administrator', 'bananas18', {
+  host: 'wayn.ccpnt53lucxn.us-east-2.rds.amazonaws.com',
   dialect: 'mysql',
-
   pool: {
     max: 5,
     min: 0,
     acquire: 30000,
     idle: 10000
   },
-
   // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
   operatorsAliases: false
 });
 
-var User = sequelize.define('user', {
+const User = sequelize.define('user', {
+  id: {
+    type: Sequelize.INTEGER, 
+    primaryKey: true,
+    autoIncrement: true
+  },
   firstName: Sequelize.STRING,
   lastName: Sequelize.STRING,
-  phoneNumber: Sequelize.INTEGER
+  phoneNumber: Sequelize.INTEGER,
+  image: Sequelize.STRING,
+  currentLocation: Sequelize.INTEGER 
 });
+
+const Event = sequelize.define('event', {
+  id: {
+    type: Sequelize.INTEGER, 
+    primaryKey: true,
+    autoIncrement: true
+  },
+  eventLocation: Sequelize.INTEGER,
+  eventName: Sequelize.INTEGER,
+  eventTime: Sequelize.INTEGER
+})
 
 sequelize.sync({force: true})
   .then(() => User.create({
-    firstName: 'madi',
-    lastName: 'crocker',
-    phoneNumber: '2018675309'
+    id: 1,
+    firstName: 'jane',
+    lastName: 'doe',
+    phoneNumber: 123456789
+  }))
+  .then(jane => {
+    console.log(jane.toJSON());
+
+sequelize.sync({force: true})
+  .then(() => Event.create({
+    id: 1,
+    eventLocation: 'hack reactor',
+    eventName: 'hackathon',
+    eventTime: 123456789
   }))
   .then(jane => {
     console.log(jane.toJSON());
   });
-
-
-// connection.connect(function(err){
-
-//   if(!err) {
-//       console.log("Database is connected ... ");    
-//   } else {
-//       console.log("Error connecting database ... ");    
-//   }
-//   });
-
-var selectAll = function(callback) {
-  connection.query('SELECT * FROM items', function(err, results, fields) {
-    if(err) {
-      callback(err, null);
-    } else {
-      callback(null, results);
-    }
-  });
-};
-
-module.exports.selectAll = selectAll;
