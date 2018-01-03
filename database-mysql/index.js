@@ -19,8 +19,8 @@ bookshelf.knex.schema.hasTable('users').then(function(exists) {
       user.string('lastName', 255);
       user.integer('phoneNumber', 100);
       user.string('image', 255);
-      user.integer('latitude');
-      user.integer('longitude');
+      user.decimal('latitude');
+      user.decimal('longitude');
       user.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
@@ -32,8 +32,8 @@ bookshelf.knex.schema.hasTable('events').then(function(exists) {
   if (!exists) {
     bookshelf.knex.schema.createTable('events', function(event) {
       event.increments('id').primary();
-      event.integer('eventLatitude');
-      event.integer('eventLongitude');
+      event.decimal('eventLatitude');
+      event.decimal('eventLongitude');
       event.string('eventName', 255);
       event.integer('eventTime');
     })
@@ -42,4 +42,3 @@ bookshelf.knex.schema.hasTable('events').then(function(exists) {
     })
   }
 })
-
