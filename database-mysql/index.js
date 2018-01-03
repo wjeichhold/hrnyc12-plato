@@ -45,6 +45,7 @@ sequelize.sync({force: true})
   }))
   .then(jane => {
     console.log(jane.toJSON());
+  });
 
 sequelize.sync({force: true})
   .then(() => Event.create({
@@ -55,4 +56,5 @@ sequelize.sync({force: true})
   }))
   .then(jane => {
     console.log(jane.toJSON());
-  });
+  })
+  

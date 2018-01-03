@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import AddAttendee from './AddAttendee.jsx';
 import AttendeeList from './AttendeeList.jsx';
+import MapWithSearchBox from './MapWithSearch.jsx';
 
 class CreateEvent extends React.Component {
   constructor (props) {
@@ -9,8 +10,8 @@ class CreateEvent extends React.Component {
     this.state = {
       eventName: '',
       location: {
-        longitude: '',
-        latitude: '',
+        lat: '',
+        lng: '',
       },
       organizerFirstName: '',
       organizerLastName: '',
@@ -26,9 +27,15 @@ class CreateEvent extends React.Component {
     this.handleFirstNameChange = this.handleFirstNameChange.bind(this);
     this.handleLastNameChange = this.handleLastNameChange.bind(this);
     this.handlePhoneNumberChange = this.handlePhoneNumberChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);    
+    this.handleLocationChange = this.handleLocationChange.bind(this);
   }
   
+  handleLocationChange (location) {
+    this.setState({
+      location: location
+    });
+  }
+
   handleEventNameChange (e) {
     this.setState({
       eventName: e.target.value
@@ -71,10 +78,6 @@ class CreateEvent extends React.Component {
     });
   }
 
-  handleSubmit () {
-    this.props.addNewAttendee(this.state);
-  }
-
   render () {
     return (
       <div className="createEvent">
@@ -91,9 +94,7 @@ class CreateEvent extends React.Component {
             <input type="time" value={this.state.time} onChange={this.handleTimeChange} required/>
           </label>
           <br/>
-
-            To be added: MapWithSearchBox component
-            { /* <MapWithSearchBox /> */ }
+          <MapWithSearchBox getEventCoordinate={this.handleLocationChange}/>
 
           <br/>
           <br/>
@@ -114,7 +115,7 @@ class CreateEvent extends React.Component {
 
           <label>
             Phone Number: 
-            <input type="tel" value={this.state.organizerLastName} onChange={this.handlePhoneNumberChange} required/> 
+            <input type="tel" value={this.state.organizerPhoneNumber} onChange={this.handlePhoneNumberChange} required/> 
           </label>
           <br/>
 
