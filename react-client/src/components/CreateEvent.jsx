@@ -50,8 +50,12 @@ class CreateEvent extends React.Component {
 
   handleSubmit (e) {
     e.preventDefault();
-    console.log('Submitting, contents of state:', this.state);
-    axios.post('/event', this.state).then((response) => console.log(response));
+    if (this.state.attendees.length > 0) {
+      console.log('Submitting, contents of state:', this.state);
+      axios.post('/event', this.state).then((response) => console.log(response));
+    } else {
+      window.alert(`Don't forget to invite someone!`);
+    }
   }
 
   handleNewAttendee (attendee) {
