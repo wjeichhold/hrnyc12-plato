@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 
-var db = require('../database-mysql');
+var db = require('../database-mysql/index.js');
 
 var morgan = require('morgan');
 
