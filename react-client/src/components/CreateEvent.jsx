@@ -28,8 +28,17 @@ class CreateEvent extends React.Component {
     this.handleLastNameChange = this.handleLastNameChange.bind(this);
     this.handlePhoneNumberChange = this.handlePhoneNumberChange.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
+    this.handleDeleteAttendee = this.handleDeleteAttendee.bind(this);
   }
   
+  handleDeleteAttendee (attendee) {
+    let deleteIndex = this.state.attendees.indexOf(attendee);
+    this.state.attendees.splice(deleteIndex, 1);
+    this.setState({
+      attendees: this.state.attendees
+    })
+  }
+
   handleLocationChange (location) {
     this.setState({
       location: location
@@ -128,7 +137,7 @@ class CreateEvent extends React.Component {
         <br/>
           <div className="attendeeInfo">
             <AddAttendee addNewAttendee={this.handleNewAttendee} />
-            <AttendeeList attendees={this.state.attendees} />
+            <AttendeeList attendees={this.state.attendees} deleteAttendee={this.handleDeleteAttendee}/>
           </div>
       </div>
     );
