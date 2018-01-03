@@ -1,17 +1,12 @@
 import React from 'react';
+import AttendeeListItem from './AttendeeListItem.jsx';
 
-const AttendeeList = ({attendees}) => (
+const AttendeeList = ({attendees, deleteAttendee}) => (
   <ul className="attendeeList">
     <h4> Current Attendees: </h4>
-    {attendees.map((attendee) => (
-    <li key={attendee.phoneNumber}>
-      <span className="attendeeName">
-        { attendee.firstName + ' ' + attendee.lastName }
-      </span>,
-      <span className="attendeePhoneNumber">
-        { ' ' + attendee.phoneNumber }
-      </span>
-    </li>))}
+    {attendees.map((attendee, key) => (
+      <AttendeeListItem key={attendee.phoneNumber} attendee={attendee} deleteAttendee={deleteAttendee} />
+    ))}
   </ul>
 );
 

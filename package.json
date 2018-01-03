@@ -30,7 +30,7 @@
     "react-dom": "^15.4.2",
     "react-google-maps": "^9.4.3",
     "react-router-dom": "^4.2.2",
-    "recompose": "^0.26.0"
+    "recompose": "^0.26.0",
     "twilio": "^3.11.0"
   }
 }
