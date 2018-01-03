@@ -1,0 +1,36 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'run',
+1 verbose cli   'react-dev' ]
+2 info using npm@3.10.10
+3 info using node@v6.11.4
+4 verbose run-script [ 'prereact-dev', 'react-dev', 'postreact-dev' ]
+5 info lifecycle WAYN@1.0.0~prereact-dev: WAYN@1.0.0
+6 silly lifecycle WAYN@1.0.0~prereact-dev: no script for prereact-dev, continuing
+7 info lifecycle WAYN@1.0.0~react-dev: WAYN@1.0.0
+8 verbose lifecycle WAYN@1.0.0~react-dev: unsafe-perm in lifecycle true
+9 verbose lifecycle WAYN@1.0.0~react-dev: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\Users\rvcwh_000\Documents\GitHub\greenfield\hrnyc12-plato\node_modules\.bin;D:\HR\cmder\vendor\conemu-maximus5\ConEmu\Scripts;D:\HR\cmder\vendor\conemu-maximus5;D:\HR\cmder\vendor\conemu-maximus5\ConEmu;C:\Python27\;C:\Python27\Scripts;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\MinGW\bin;C:\MinGW\libexec\gcc\x86_64-pc-mingw32\4.9.2;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Java\jdk1.8.0\bin; C:\Program Files\PuTTY;C:\Program Files (x86)\QuickTime\QTSystem\;C:\Go\bin;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\MATLAB\R2015a\bin;C:\Program Files (x86)\Heroku\bin;C:\Program Files\Google\Cloud SDK\google-cloud-sdk\bin;C:\HashiCorp\Vagrant\bin;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\nodejs\;C:\Users\rvcwh_000\AppData\Roaming\npm;C:\Users\rvcwh_000\AppData\Roaming\npm\bower\bin\bower;C:\Program Files\Git\cmd;C:\Program Files\mysql\MySQL Server 5.7\bin\;C:\Program Files\MongoDB\Server\3.6\bin;C:\Program Files\Heroku\bin;C:\Program Files\sqlite\bin;C:\Users\rvcwh_000\scoop\shims;C:\Ruby22-x64\bin;C:\RailsInstaller\Git\cmd;C:\RailsInstaller\Ruby2.1.0\bin;C:\windows\system32; C:\Ruby193\bin; C:\Users\rvcwh_000\Documents\Development\Android\adt-bundle-windows-x86-20140321\sdk\platform-tools;C:\Users\rvcwh_000\Documents\Development\Android\adt-bundle-windows-x86-20140321\sdk\tools; C:\Program Files (x86)\PuTTY;"C:\Program Files (x86)\Notepad++";C:\Python27";C:\Program Files\CMake\bin;C:\Users\rvcwh_000\.lein\bin;C:\Users\rvcwh_000\AppData\Local\learn_ide_3\bin;C:\Users\rvcwh_000\AppData\Roaming\npm;C:\Program Files\Microsoft VS Code\bin;C:\Users\rvcwh_000\AppData\Roaming\npm;C:\Users\rvcwh_000\AppData\Roaming\npm\bower\bin\bower;C:\Program Files (x86)\curl\bin\curl;C:\Program Files\mysql\MySQL Server 5.7\bin\;C:\Program Files\Heroku\bin;C:\Program Files\sqlite\bin
+10 verbose lifecycle WAYN@1.0.0~react-dev: CWD: C:\Users\rvcwh_000\Documents\GitHub\greenfield\hrnyc12-plato
+11 silly lifecycle WAYN@1.0.0~react-dev: Args: [ '/d /s /c', 'webpack -d --watch' ]
+12 verbose stack Error: kill ENOSYS
+12 verbose stack     at Object.exports._errnoException (util.js:1020:11)
+12 verbose stack     at process.kill (internal/process.js:191:18)
+12 verbose stack     at process.listener (C:\Program Files\nodejs\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:86:15)
+12 verbose stack     at emitNone (events.js:91:20)
+12 verbose stack     at process.emit (events.js:185:7)
+12 verbose stack     at processEmit (C:\Program Files\nodejs\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+12 verbose stack     at processEmit (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+12 verbose stack     at Signal.wrap.onsignal (internal/process.js:217:44)
+13 verbose cwd C:\Users\rvcwh_000\Documents\GitHub\greenfield\hrnyc12-plato
+14 error Windows_NT 6.3.9600
+15 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "run" "react-dev"
+16 error node v6.11.4
+17 error npm  v3.10.10
+18 error code ENOSYS
+19 error errno ENOSYS
+20 error syscall kill
+21 error kill ENOSYS
+22 error If you need help, you may report this error at:
+22 error     <https://github.com/npm/npm/issues>
+23 verbose exit [ 1, true ]
