@@ -60,7 +60,20 @@ class CreateEvent extends React.Component {
   handleSubmit (e) {
     e.preventDefault();
     if (this.state.attendees.length > 0) {
-      console.log('Submitting, contents of state:', this.state);
+      let infoToPost = this.state;
+
+      // Add organizer as an attendee of event, then remove those properties from infoToPost
+      infoToPost.attendees.push({
+        firstName: this.state.organizerFirstName,
+        lastName: this.state.organizerLastName,
+        phoneNumber: this.state.organizerPhoneNumber
+      });
+
+      delete infoToPost.organizerFirstName;
+      delete infoToPost.organizerLastName;
+      delete infoToPost.organizerPhoneNumber;
+      
+      console.log('Submitting, contents of state:', infoToPost);
       axios.post('/event', this.state).then((response) => console.log(response));
     } else {
       window.alert(`Don't forget to invite someone!`);

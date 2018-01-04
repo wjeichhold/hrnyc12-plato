@@ -6,14 +6,29 @@ var User = require('../database-mysql/models/user');
 var Event = require('../database-mysql/models/event');
 
 var morgan = require('morgan');
+<<<<<<< HEAD
+<<<<<<< HEAD
 var knex = require('knex')
 var coll = require('../database-mysql/collections/users.js')
+=======
+var userControllers = require('../database-mysql/controllers/userController.js')
+var eventController = require('../database-mysql/controllers/eventController.js')
+>>>>>>> Add small changes to server and controllers
+=======
+
+var Users = require('../database-mysql/collections/users.js')
+var userControllers = require('../database-mysql/controllers/userController.js')
+var eventController = require('../database-mysql/controllers/eventController.js')
+>>>>>>> feat/userPut
 
 var app = express();
 var port = process.env.PORT || 3000;
+
 app.use(morgan('dev'));
 app.use(express.static(__dirname + '/../react-client/dist'));
+app.use(bodyParser.json());
 
+app.put('/user', userControllers.put);
 
 // below is dummy data that represents results from the database as part of the post to /event
 var queryResults = { 

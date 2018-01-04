@@ -11,10 +11,25 @@ class EventMap extends React.Component {
         lat:40.7505, 
         lng:-73.9764
       },
-      users: [
-        {firstName: 'asddasfa', lastName: 'alkdk', location: {lat:40.7413, lng:-73.9883}}, 
-        {firstName: 'asddasfa', lastName: 'alkdk', location: {lat:40.7268, lng:-74.0353}}, 
-        {firstName: 'asddasfa', lastName: 'alkdk', location: {lat:40.6872, lng:-73.9418}}
+      users : [
+        {
+          firstName: 'Hoang',
+          lastName: 'Nguyen',
+          phoneNumber: '1112223333',
+          location: {lat:40.7413, lng:-73.9883}
+        },
+        {
+          firstName: 'Jimmy',
+          lastName: 'Kang',
+          phoneNumber: '3334445555',
+          location: {lat:40.7268, lng:-74.0353}
+        },
+        {
+          firstName: 'Ryan',
+          lastName: 'Whitworth',
+          phoneNumber: '7778889999',
+          location: {lat:40.6872, lng:-73.9418}
+        },
       ],
       userLocation: {
         lat: '',
@@ -90,10 +105,6 @@ class EventMap extends React.Component {
     navigator.geolocation.watchPosition(geoSuccess, geoError);
   }
 
-  pluckUserLocations () {
-    return this.state.users.map((user) => user.location);
-  }
-
   render () {
     return (
       <div>
@@ -101,7 +112,7 @@ class EventMap extends React.Component {
         <p> Event ID: {this.state.eventId} </p>
         <p> User ID: {this.state.userId} </p>
         <p> Current location: {this.state.userLocation.lat + ',' + this.state.userLocation.lng} </p>
-        <AttendeeMap userCoordinates={this.pluckUserLocations()} eventCoordinate={this.state.eventLocation} directions={[]}/>
+        <AttendeeMap users={this.state.users} eventCoordinate={this.state.eventLocation} directions={[]}/>
         <AddAttendee addNewAttendee={this.handleNewAttendee} />
       </div>
     );
