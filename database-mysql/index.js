@@ -43,3 +43,5 @@ bookshelf.knex.schema.hasTable('events').then(function(exists) {
     })
   }
 });
+
+module.exports = bookshelf;

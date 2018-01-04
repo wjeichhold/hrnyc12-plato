@@ -1,6 +1,6 @@
 var db = require('../index.js');
 
-var Event = bookshelf.Model.extend({
+var Event = db.Model.extend({
     tableName: 'events'
   });
 
