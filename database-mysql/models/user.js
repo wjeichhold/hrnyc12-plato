@@ -1,6 +1,7 @@
-var db = require('../config');
+var db = require('../index.js');
+// var bookshelf = require('bookshelf')
 
-var User = bookshelf.Model.extend({
+var User = db.Model.extend({
     tableName: 'users'
   });
 

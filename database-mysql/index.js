@@ -6,7 +6,8 @@ var knex = require('knex')({
     password : 'bananas18',
     database : 'WAYN_HRNYC12',
     charset  : 'utf8'
-  }
+  },
+  useNullAsDefault: true
 });
  
 var bookshelf = require('bookshelf')(knex);
@@ -17,7 +18,7 @@ bookshelf.knex.schema.hasTable('users').then(function(exists) {
       user.increments('id').primary();
       user.string('firstName', 255);
       user.string('lastName', 255);
-      user.integer('phoneNumber', 100);
+      user.integer('phoneNumber');
       user.string('image', 255);
       user.decimal('latitude');
       user.decimal('longitude');
@@ -42,3 +43,5 @@ bookshelf.knex.schema.hasTable('events').then(function(exists) {
     })
   }
 });
+
+module.exports = bookshelf;
