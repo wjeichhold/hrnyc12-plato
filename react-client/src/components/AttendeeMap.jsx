@@ -7,47 +7,84 @@ const {
   DirectionsRenderer,
 } = require("react-google-maps");
 
+const { MarkerWithLabel } = require("react-google-maps/lib/components/addons/MarkerWithLabel");
+var textColorBackground = ['floralwhite','lightblue', 'lavender', 'powderblue', 'peachpuff', 'palegreen', 'wheat'];
+
+
 const AttendeeMap = compose(
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyA3wPEP1-hGvDC0_cmmKv3JRYiKIJukCCU&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `500px` , width: `700px`}} />,
     mapElement: <div style={{ height: `100%` }} />,
-    directions: []
+    options : {suppressMarkers: true},
+    eventCoordinate : {lat:40.7505, lng:-73.9764},
+    users : [
+      {
+        firstName: 'Hoang',
+        lastName: 'Nguyen',
+        phoneNumber: '1112223333',
+        location: {lat:40.7413, lng:-73.9883},
+      },
+      {
+        firstName: 'Jimmy',
+        lastName: 'Kang',
+        phoneNumber: '3334445555',
+        location: {lat:40.7268, lng:-74.0353},
+      },
+      {
+        firstName: 'Ryan',
+        lastName: 'Whitworth',
+        phoneNumber: '7778889999',
+        location: {lat:40.6872, lng:-73.9418},
+      },
+    ],    
+    directions : []
   }),
   withScriptjs,
   withGoogleMap,
   lifecycle({
     componentDidMount() {
       const DirectionsService = new google.maps.DirectionsService();
-
-      this.props.userCoordinates.forEach((userCoordinate, i) => {
+      this.props.users.forEach((user, i) => {
         DirectionsService.route({
-          origin: new google.maps.LatLng(userCoordinate.lat, userCoordinate.lng),
+          origin: new google.maps.LatLng(user.location.lat, user.location.lng),
           destination: new google.maps.LatLng(this.props.eventCoordinate.lat, this.props.eventCoordinate.lng),
           travelMode: google.maps.TravelMode.TRANSIT,
         }, (result, status) => {
           if (status === google.maps.DirectionsStatus.OK) {
             this.props.directions.push(result);
             this.setState({directions : this.props.directions});
-            console.log('directions after setting state', directions)
           } else {
             console.error(`error fetching directions ${result}`);
           }
         });
-
       });
     }
   })
 )(props =>
   <GoogleMap defaultZoom={6} defaultCenter={new google.maps.LatLng(40.7128, -74.0060)}>
-    { 
-      (props.directions.length === props.userCoordinates.length) ? 
+
+  {props.directions.length === props.users.length ?
+    props.users.map((user, j) => (
+      <MarkerWithLabel 
+        position={user.location}
+        labelAnchor={new google.maps.Point(-10, -10)}
+        labelStyle={{background: textColorBackground[j], fontSize: "15px", padding: "4px", borderRadius: "15%",border: "1px solid black"}}
+        user={user}
+        key={j}
+      >
+        <div>
+          <div>{user.firstName} {user.lastName.charAt(0)+'.'}</div>
+        </div>
+      </MarkerWithLabel>)) : ''}
+
+    {(props.directions.length === props.users.length) ? 
       (props.directions.map((direction, i) => (
-        <DirectionsRenderer directions={direction} key={i}/>)
-        )) 
-      : ''
-    }
+        <DirectionsRenderer directions={direction} key={i}/>
+        )
+      )) : ''}) 
+  }
   </GoogleMap>
 );
 
