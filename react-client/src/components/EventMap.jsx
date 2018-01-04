@@ -67,7 +67,7 @@ class EventMap extends React.Component {
         <h4> Event Map </h4>
         <p> Event ID: {this.props.match.params.number} </p>
         <p> Current location: {this.state.userLocation.lat + ',' + this.state.userLocation.lng} </p>
-        <p> TODO add dynamic map </p>
+        <p> TODO integrate Jimmy's AttendeeMap component </p>
       </div>
     );
   }
