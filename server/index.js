@@ -4,6 +4,8 @@ var keys = require('../config.js');
 var db = require('../database-mysql');
 
 var morgan = require('morgan');
+var knex = require('knex')
+var coll = require('../database-mysql/collections/users.js')
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -80,6 +82,27 @@ app.listen(port, function() {
   console.log('listening on port,', port);
 });
 
+app.post('/usersDB', (req, res) => {
+  coll.create({
+   
+  })
+  .then((result) => {
+    res.json({ success: true, message: 'ok' });     // respond back to request
+  })
+  .catch((error) => console.log(error))
+})
+
+app.post('/eventsDB', (req, res) => {
+    console.log('insert functino invoked in server')
+
+  coll.create({
+     
+  })
+  .then((result) => {
+    res.json({ success: true, message: 'ok' });     // respond back to request
+  })
+  .catch((error) => console.log(error))
+})
 
 //THIS WILL BE USED in the ASYNC DB CALLS TO SEND THE 
 //URL AFTER EACH USER IS SAVED AND THE EVENT IS CREATED
