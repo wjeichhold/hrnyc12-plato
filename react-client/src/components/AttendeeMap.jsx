@@ -17,29 +17,7 @@ const AttendeeMap = compose(
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `500px` , width: `700px`}} />,
     mapElement: <div style={{ height: `100%` }} />,
-    options : {suppressMarkers: true},
-    eventCoordinate : {lat:40.7505, lng:-73.9764},
-    users : [
-      {
-        firstName: 'Hoang',
-        lastName: 'Nguyen',
-        phoneNumber: '1112223333',
-        location: {lat:40.7413, lng:-73.9883},
-      },
-      {
-        firstName: 'Jimmy',
-        lastName: 'Kang',
-        phoneNumber: '3334445555',
-        location: {lat:40.7268, lng:-74.0353},
-      },
-      {
-        firstName: 'Ryan',
-        lastName: 'Whitworth',
-        phoneNumber: '7778889999',
-        location: {lat:40.6872, lng:-73.9418},
-      },
-    ],    
-    directions : []
+    options : {suppressMarkers: true}
   }),
   withScriptjs,
   withGoogleMap,
