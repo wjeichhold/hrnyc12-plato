@@ -68,9 +68,19 @@ class CreateEvent extends React.Component {
   }
 
   handleNewAttendee (attendee) {
-    this.setState({
-      attendees: [...this.state.attendees, attendee]
-    });
+    if(this.isUniqueAttendee(attendee)) {
+      this.setState({
+        attendees: [...this.state.attendees, attendee]
+      });
+    } else {
+      window.alert('Attendee with that phone number already invited!');
+    }
+  }
+
+  isUniqueAttendee(attendee) {
+    return this.state.attendees.reduce((isUnique, currentAttendee) => {
+      return isUnique || attendee.phoneNumber === currentAttendee.phoneNumber
+    }, true);
   }
 
   handleFirstNameChange (e) {
