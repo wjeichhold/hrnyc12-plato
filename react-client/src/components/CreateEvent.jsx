@@ -28,8 +28,17 @@ class CreateEvent extends React.Component {
     this.handleLastNameChange = this.handleLastNameChange.bind(this);
     this.handlePhoneNumberChange = this.handlePhoneNumberChange.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
+    this.handleDeleteAttendee = this.handleDeleteAttendee.bind(this);
   }
   
+  handleDeleteAttendee (attendee) {
+    let deleteIndex = this.state.attendees.indexOf(attendee);
+    this.state.attendees.splice(deleteIndex, 1);
+    this.setState({
+      attendees: this.state.attendees
+    })
+  }
+
   handleLocationChange (location) {
     this.setState({
       location: location
@@ -50,14 +59,28 @@ class CreateEvent extends React.Component {
 
   handleSubmit (e) {
     e.preventDefault();
-    console.log('Submitting, contents of state:', this.state);
-    axios.post('/event', this.state).then((response) => console.log(response));
+    if (this.state.attendees.length > 0) {
+      console.log('Submitting, contents of state:', this.state);
+      axios.post('/event', this.state).then((response) => console.log(response));
+    } else {
+      window.alert(`Don't forget to invite someone!`);
+    }
   }
 
   handleNewAttendee (attendee) {
-    this.setState({
-      attendees: [...this.state.attendees, attendee]
-    });
+    if(this.isUniqueAttendee(attendee)) {
+      this.setState({
+        attendees: [...this.state.attendees, attendee]
+      });
+    } else {
+      window.alert('Attendee with that phone number already invited!');
+    }
+  }
+
+  isUniqueAttendee(attendee) {
+    return this.state.attendees.reduce((isUnique, currentAttendee) => {
+      return isUnique || attendee.phoneNumber === currentAttendee.phoneNumber
+    }, true);
   }
 
   handleFirstNameChange (e) {
@@ -124,7 +147,7 @@ class CreateEvent extends React.Component {
         <br/>
           <div className="attendeeInfo">
             <AddAttendee addNewAttendee={this.handleNewAttendee} />
-            <AttendeeList attendees={this.state.attendees} />
+            <AttendeeList attendees={this.state.attendees} deleteAttendee={this.handleDeleteAttendee}/>
           </div>
       </div>
     );

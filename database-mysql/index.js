@@ -11,7 +11,7 @@ var knex = require('knex')({
 });
  
 var bookshelf = require('bookshelf')(knex);
- 
+
 bookshelf.knex.schema.hasTable('users').then(function(exists) {
   if (!exists) {
     bookshelf.knex.schema.createTable('users', function(user) {
@@ -43,5 +43,3 @@ bookshelf.knex.schema.hasTable('events').then(function(exists) {
     })
   }
 });
-
-module.exports = bookshelf;

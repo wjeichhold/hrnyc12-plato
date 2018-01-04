@@ -5,6 +5,3 @@ var Event = bookshelf.Model.extend({
   });
 
 module.exports = Event;
-
-
-///model => collection => controller

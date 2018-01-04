@@ -40,7 +40,7 @@ class AddAttendee extends React.Component {
 
   render () {
     return (
-      <div className="addAttendee">
+      <form onSubmit={this.handleSubmit} className="addAttendee">
         <h4>Attendee Information:</h4>
           <label>
             First Name: 
@@ -60,8 +60,8 @@ class AddAttendee extends React.Component {
           </label>
           <br/>
 
-          <button onClick={this.handleSubmit}>Add Attendee</button>
-      </div>
+          <input type="submit" value="Add Attendee" />
+      </form>
     )
   }
 }
