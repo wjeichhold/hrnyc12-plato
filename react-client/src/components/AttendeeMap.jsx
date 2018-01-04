@@ -13,9 +13,7 @@ const AttendeeMap = compose(
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `500px` , width: `700px`}} />,
     mapElement: <div style={{ height: `100%` }} />,
-    eventCoordinate : {lat:40.7505, lng:-73.9764},
-    userCoordinates : [{lat:40.7413, lng:-73.9883}, {lat:40.7268, lng:-74.0353}, {lat:40.6872, lng:-73.9418}],
-    directions : []
+    directions: []
   }),
   withScriptjs,
   withGoogleMap,
@@ -32,6 +30,7 @@ const AttendeeMap = compose(
           if (status === google.maps.DirectionsStatus.OK) {
             this.props.directions.push(result);
             this.setState({directions : this.props.directions});
+            console.log('directions after setting state', directions)
           } else {
             console.error(`error fetching directions ${result}`);
           }
@@ -42,9 +41,13 @@ const AttendeeMap = compose(
   })
 )(props =>
   <GoogleMap defaultZoom={6} defaultCenter={new google.maps.LatLng(40.7128, -74.0060)}>
-    {
-      (props.directions.length === props.userCoordinates.length) ? (props.directions.map((direction, i) => (<DirectionsRenderer directions={direction} key={i}/>))) : ''}) 
-  }
+    { 
+      (props.directions.length === props.userCoordinates.length) ? 
+      (props.directions.map((direction, i) => (
+        <DirectionsRenderer directions={direction} key={i}/>)
+        )) 
+      : ''
+    }
   </GoogleMap>
 );
 
