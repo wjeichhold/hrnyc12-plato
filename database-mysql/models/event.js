@@ -1,6 +1,6 @@
-var db = require('../index');
+var db = require('../index.js');
 
-var User = bookshelf.Model.extend({
+var Event = bookshelf.Model.extend({
     tableName: 'events'
   });
 
