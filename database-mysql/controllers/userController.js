@@ -1,20 +1,11 @@
 var User = require('../models/user');
 
-// let user = {
-//     firstName: 'Rick',
-//     lastName: 'Sanchez',
-//     phoneNumber: 1234567890
-//   }
-//   var insertUser = (user) => { 
-//     User.find({ where: { id: id } });
-//   }
-
 const put = (req, res) => {
   let userId = req.body.userId;
-  let latitude = req.body.latitude;
-  let longitude = req.body.longitude;
+  let latitude = req.body.lat;
+  let longitude = req.body.lng;
 
-  new User({userId: userId})
+  new User({id: userId})
   .fetch()
   .then((user) => {
     if (user) {
@@ -26,9 +17,8 @@ const put = (req, res) => {
     }
   })
   .then(() => {
-    res.sendStatus(201);
-  })
-
+    res.sendStatus(200);
+  });
 }
 
 module.exports.put = put;
