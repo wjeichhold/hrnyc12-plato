@@ -10,23 +10,6 @@ var knex = require('knex')({
 });
  
 var bookshelf = require('bookshelf')(knex);
- 
-bookshelf.knex.schema.hasTable('users').then(function(exists) {
-  if (!exists) {
-    bookshelf.knex.schema.createTable('users', function(user) {
-      user.increments('id').primary();
-      user.string('firstName', 255);
-      user.string('lastName', 255);
-      user.integer('phoneNumber', 100);
-      user.string('image', 255);
-      user.decimal('latitude');
-      user.decimal('longitude');
-      user.timestamps();
-    }).then(function (table) {
-      console.log('Created Table', table);
-    });
-  }
-});
 
 bookshelf.knex.schema.hasTable('events').then(function(exists) {
   if (!exists) {
@@ -40,5 +23,23 @@ bookshelf.knex.schema.hasTable('events').then(function(exists) {
     .then(function(table) {
       console.log('Created events tables', table)
     })
+  }
+});
+
+bookshelf.knex.schema.hasTable('users').then(function(exists) {
+  if (!exists) {
+    bookshelf.knex.schema.createTable('users', function(user) {
+      user.increments('id').primary();
+      user.string('firstName', 255);
+      user.string('lastName', 255);
+      user.integer('phoneNumber', 100);
+      user.decimal('latitude');
+      user.decimal('longitude');
+      user.integer('event_id').unsigned();
+      user.foreign('event_id').references('events.id')
+      user.timestamps();
+    }).then(function (table) {
+      console.log('Created Table', table);
+    });
   }
 });
