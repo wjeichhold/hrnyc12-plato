@@ -2,6 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var keys = require('../config.js');
 var db = require('../database-mysql');
+var User = require('../database-mysql/models/user');
+var Event = require('../database-mysql/models/event');
 
 var morgan = require('morgan');
 var knex = require('knex')
@@ -76,6 +78,19 @@ app.get('/test', (req, res) => {
   })
   res.send('hello world');
 })
+
+app.get('/event', (req, res) => {
+  var eventId = req.param('eventId');
+  new Event({'id': eventId})
+    .fetch()
+    .then(function(eventData){
+      User.where({'eventId': eventId})
+      .fetchAll()
+      .then(function(users) {
+        res.send({ users:users, event: eventData })
+      });
+    });
+});
 
 
 app.listen(port, function() {

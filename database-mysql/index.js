@@ -22,6 +22,7 @@ bookshelf.knex.schema.hasTable('users').then(function(exists) {
       user.string('image', 255);
       user.decimal('latitude');
       user.decimal('longitude');
+      user.integer('eventId');
       user.timestamps();
     }).then(function (table) {
       console.log('Created Table', table);
@@ -43,3 +44,5 @@ bookshelf.knex.schema.hasTable('events').then(function(exists) {
     })
   }
 });
+
+module.exports = bookshelf;
