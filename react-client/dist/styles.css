@@ -10,12 +10,6 @@ body {
   float: left;
 }
 
-.attendeeList {
-  float: left;
-  width: 35%;
-  min-width: 35%;
-}
-
 .attendeeInfo {
   height: auto;
   width: 80%;
@@ -30,10 +24,10 @@ ul {
   height: auto;
 }
 
-.createEventButton {
-  float: left;
-}
-
 input {
   margin: .5%;
+}
+
+body {
+  background-color: #FFEBEE
 }
