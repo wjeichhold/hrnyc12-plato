@@ -3,6 +3,7 @@ import axios from 'axios';
 import AddAttendee from './AddAttendee.jsx';
 import AttendeeList from './AttendeeList.jsx';
 import MapWithSearchBox from './MapWithSearch.jsx';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class CreateEvent extends React.Component {
   constructor (props) {
@@ -77,8 +78,7 @@ class CreateEvent extends React.Component {
       axios.post('/event', this.state)
       .then((response) => this.props.history.push('/submit'))
       .catch((error) => {
-        console.log(this.props);
-        this.props.history.push('/submit');
+        console.log(this.props);;
       });
     } else {
       window.alert(`Don't forget to invite someone!`);
@@ -122,6 +122,7 @@ class CreateEvent extends React.Component {
   render () {
     return (
       <div className="createEvent">
+        <h1> WAYN </h1>
         <h4> Event Details </h4>
         <form onSubmit={this.handleSubmit}>
           <label>
@@ -160,7 +161,7 @@ class CreateEvent extends React.Component {
           </label>
           <br/>
 
-          <input className="createEventButton" type="submit" value="Create Event" />
+          <RaisedButton backgroundColor="#ff5879" className="createEventButton" type="submit" value="Create Event" label="Create Event"/>
         </form>
         <br/>
           <div className="attendeeInfo">
