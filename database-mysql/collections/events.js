@@ -3,6 +3,6 @@ var Event = require('../models/event');
 
 var Events = new db.Collection();
 
-Events.model = event;
+Events.model = Event;
 
 module.exports = Events;
