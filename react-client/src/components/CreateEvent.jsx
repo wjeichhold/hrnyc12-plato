@@ -3,6 +3,7 @@ import axios from 'axios';
 import AddAttendee from './AddAttendee.jsx';
 import AttendeeList from './AttendeeList.jsx';
 import MapWithSearchBox from './MapWithSearch.jsx';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class CreateEvent extends React.Component {
   constructor (props) {
@@ -160,7 +161,7 @@ class CreateEvent extends React.Component {
           </label>
           <br/>
 
-          <input className="createEventButton" type="submit" value="Create Event" />
+          <RaisedButton backgroundColor="#ff5879" className="createEventButton" type="submit" value="Create Event" label="Create Event"/>
         </form>
         <br/>
           <div className="attendeeInfo">

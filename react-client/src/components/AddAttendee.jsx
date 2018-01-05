@@ -1,4 +1,5 @@
 import React from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class AddAttendee extends React.Component {
   constructor (props) {
@@ -60,7 +61,7 @@ class AddAttendee extends React.Component {
           </label>
           <br/>
 
-          <input type="submit" value="Add Attendee" />
+          <RaisedButton backgroundColor="#ff5879" type="submit" value="Add Attendee" label="Add Attendee"/>
       </form>
     )
   }
