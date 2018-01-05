@@ -1,10 +1,28 @@
-// var db = require('../database-mysql');
+
 var Users = require('../collections/users');
 var Events = require('../collections/events');
+var User = require('../models/user');
 
-// partially working insert method,
-// need to fix async issues because I want to be able to res.send on the server side
+const put = (req, res) => {
+  let userId = req.body.userId;
+  let latitude = req.body.lat;
+  let longitude = req.body.lng;
 
+  new User({id: userId})
+  .fetch()
+  .then((user) => {
+    if (user) {
+        user.set('latitude', latitude);
+        user.set('longitude', longitude);
+        return user.save();
+    } else {
+      console.error('No user found with that ID, could not update location!');
+    }
+  })
+  .then(() => {
+    res.sendStatus(200);
+  });
+}
 
   var insert = (users, event, twilio) => {
     console.log('insert functino invoked');
@@ -26,4 +44,6 @@ var Events = require('../collections/events');
     })
   }
 
-  exports.insert = insert;
+
+module.exports.put = put;
+exports.insert = insert;

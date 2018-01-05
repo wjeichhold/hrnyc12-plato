@@ -1,4 +1,4 @@
-var db = require('../database-mysql/collections/events.js');
+var Events = require('../collections/events.js');
 
 // to be called on server side
 

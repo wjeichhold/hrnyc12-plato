@@ -16,8 +16,8 @@ bookshelf.knex.schema.hasTable('events').then(function(exists) {
   if (!exists) {
     bookshelf.knex.schema.createTable('events', function(event) {
       event.increments('id').primary();
-      event.decimal('eventLatitude');
-      event.decimal('eventLongitude');
+      event.decimal('eventLatitude', 15, 10);
+      event.decimal('eventLongitude',15, 10);
       event.string('eventName', 255);
       event.integer('eventTime');
     })
@@ -34,18 +34,15 @@ bookshelf.knex.schema.hasTable('users').then(function(exists) {
       user.string('firstName', 255);
       user.string('lastName', 255);
       user.integer('phoneNumber');
-      user.string('image', 255);
-      user.decimal('latitude');
-      user.decimal('longitude');
+      user.decimal('latitude', 15, 10);
+      user.decimal('longitude', 15, 10);
       user.integer('eventId');
       user.foreign('eventId').references('event.id');
-      user.timestamps();
+      user.timestamps(true, true);
     }).then(function (table) {
       console.log('Created Table', table);
     });
   }
 });
-
-
 
 module.exports = bookshelf;
