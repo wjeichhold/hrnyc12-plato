@@ -60,8 +60,26 @@ class CreateEvent extends React.Component {
   handleSubmit (e) {
     e.preventDefault();
     if (this.state.attendees.length > 0) {
-      console.log('Submitting, contents of state:', this.state);
-      axios.post('/event', this.state).then((response) => console.log(response));
+      let infoToPost = this.state;
+
+      // Add organizer as an attendee of event, then remove those properties from infoToPost
+      infoToPost.attendees.push({
+        firstName: this.state.organizerFirstName,
+        lastName: this.state.organizerLastName,
+        phoneNumber: this.state.organizerPhoneNumber
+      });
+
+      delete infoToPost.organizerFirstName;
+      delete infoToPost.organizerLastName;
+      delete infoToPost.organizerPhoneNumber;
+      
+      console.log('Submitting, contents of state:', infoToPost);
+      axios.post('/event', this.state)
+      .then((response) => this.props.history.push('/submit'))
+      .catch((error) => {
+        console.log(this.props);
+        this.props.history.push('/submit');
+      });
     } else {
       window.alert(`Don't forget to invite someone!`);
     }
@@ -79,7 +97,7 @@ class CreateEvent extends React.Component {
 
   isUniqueAttendee(attendee) {
     return this.state.attendees.reduce((isUnique, currentAttendee) => {
-      return isUnique || attendee.phoneNumber === currentAttendee.phoneNumber
+      return isUnique && attendee.phoneNumber !== currentAttendee.phoneNumber;
     }, true);
   }
 
