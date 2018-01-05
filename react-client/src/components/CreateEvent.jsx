@@ -96,7 +96,7 @@ class CreateEvent extends React.Component {
   }
 
   isUniqueAttendee(attendee) {
-    return this.state.users.reduce((isUnique, currentAttendee) => {
+    return this.state.attendees.reduce((isUnique, currentAttendee) => {
       return isUnique && attendee.phoneNumber !== currentAttendee.phoneNumber;
     }, true);
   }
