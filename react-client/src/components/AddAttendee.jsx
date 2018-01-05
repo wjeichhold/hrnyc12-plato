@@ -1,4 +1,8 @@
 import React from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
+import Paper from 'material-ui/Paper';
+import Divider from 'material-ui/Divider';
+import TextField from 'material-ui/TextField';
 
 class AddAttendee extends React.Component {
   constructor (props) {
@@ -39,28 +43,25 @@ class AddAttendee extends React.Component {
   }
 
   render () {
+    let style = {
+      raisedButton: {
+        margin: 1
+      },
+      textField: {
+        marginLeft: 20
+      }, 
+    };
+
     return (
       <form onSubmit={this.handleSubmit} className="addAttendee">
-        <h4>Attendee Information:</h4>
-          <label>
-            First Name: 
-            <input type="text" value={this.state.firstName} onChange={this.handleFirstNameChange} required/> 
-          </label>
-          <br/>
-
-          <label>
-            Last Name: 
-            <input type="text" value={this.state.lastName} onChange={this.handleLastNameChange} required/> 
-          </label>
-          <br/>
-
-          <label>
-            Phone Number: 
-            <input type="tel" value={this.state.phoneNumber} onChange={this.handlePhoneNumberChange} required/> 
-          </label>
-          <br/>
-
-          <input type="submit" value="Add Attendee" />
+        <h4>Attendee Information</h4>
+        <TextField value={this.state.firstName} onChange={this.handleFirstNameChange} required={true} floatingLabelText="First name" style={style.textField} underlineShow={false} />
+        <Divider />
+        <TextField value={this.state.lastName} onChange={this.handleLastNameChange} required={true} floatingLabelText="Last name" style={style.textField} underlineShow={false} />
+        <Divider />
+        <TextField value={this.state.phoneNumber} onChange={this.handlePhoneNumberChange} required={true} floatingLabelText="Phone number" style={style.textField} underlineShow={false} />
+        <Divider />
+        <RaisedButton style={style.raisedButton} label="Add Attendee" onClick={this.handleSubmit} secondary={true} />
       </form>
     )
   }

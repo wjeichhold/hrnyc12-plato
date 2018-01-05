@@ -19,7 +19,7 @@ bookshelf.knex.schema.hasTable('events').then(function(exists) {
       event.decimal('eventLatitude', 15, 10);
       event.decimal('eventLongitude',15, 10);
       event.string('eventName', 255);
-      event.integer('eventTime');
+      event.string('eventTime', 10);
     })
     .then(function(table) {
       console.log('Created events tables', table)

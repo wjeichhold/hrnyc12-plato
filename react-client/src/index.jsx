@@ -6,6 +6,8 @@ import LandingPage from './components/LandingPage.jsx';
 import CreateEvent from './components/CreateEvent.jsx';
 import EventMap from './components/EventMap.jsx';
 import LoadingPage from './components/LoadingPage.jsx';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -15,6 +17,7 @@ class App extends React.Component {
   render () {
     return (
       <main>
+        
         <Switch>
           <Route exact path="/" component={LandingPage}/>
           <Route exact path="/create" component={CreateEvent}/>
@@ -27,7 +30,9 @@ class App extends React.Component {
 }
 
 ReactDOM.render((
-<HashRouter>
-  <App />
-</HashRouter>
+<MuiThemeProvider>
+  <HashRouter>
+    <App />
+  </HashRouter>
+</MuiThemeProvider>
 ), document.getElementById('app'));

@@ -6,12 +6,6 @@
   float: left;
 }
 
-.attendeeList {
-  float: left;
-  width: 35%;
-  min-width: 35%;
-}
-
 .attendeeInfo {
   height: auto;
   width: 80%;
@@ -24,10 +18,6 @@ ul {
 
 .createEvent, .createEvent form {
   height: auto;
-}
-
-.createEventButton {
-  float: left;
 }
 
 input {
