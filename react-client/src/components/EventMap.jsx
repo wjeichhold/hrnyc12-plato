@@ -116,7 +116,7 @@ class EventMap extends React.Component {
         <p> Event ID: {this.state.eventId} </p>
         <p> User ID: {this.state.userId} </p>
         <p> Current location: {this.state.userLocation.lat + ',' + this.state.userLocation.lng} </p>
-        {this.state.users.length ? <AttendeeMap users={this.state.users} eventCoordinate={this.getEventLocation()} directions={[]}/>
+        {this.state.users.length ? <AttendeeMap users={this.state.users} event={this.state.event} directions={[]}/>
         : <p>Map will be rendered when someone uploads their location! </p>}
         <AddAttendee addNewAttendee={this.handleNewAttendee} />
       </div>
@@ -125,3 +125,4 @@ class EventMap extends React.Component {
 }
 
 export default EventMap;
+
