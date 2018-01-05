@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import AttendeeMap from './AttendeeMap.jsx';
 import AddAttendee from './AddAttendee.jsx';
+import Paper from 'material-ui/Paper';
 
 class EventMap extends React.Component {
   constructor (props) {
@@ -103,14 +104,23 @@ class EventMap extends React.Component {
   }
 
   render () {
+    let style = {
+      paper : {
+        margin: 20,
+        textAlign: 'center',
+        display: 'inline-block',
+        padding: 5,
+        marginLeft: '18%'
+      }
+    }
     return (
-      <div>
+      <Paper style={style.paper} zDepth={2}>
         <h1> Wayn </h1>
         <h4> Your Event </h4>
         {this.state.users.length ? <AttendeeMap users={this.state.users} event={this.state.event} directions={[]}/>
         : <p>Map will be rendered when someone uploads their location! </p>}
         <AddAttendee addNewAttendee={this.handleNewAttendee} />
-      </div>
+      </Paper>
     );
   }
 }

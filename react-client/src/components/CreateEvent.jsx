@@ -3,6 +3,9 @@ import axios from 'axios';
 import AddAttendee from './AddAttendee.jsx';
 import AttendeeList from './AttendeeList.jsx';
 import MapWithSearchBox from './MapWithSearch.jsx';
+import CircularProgress from 'material-ui/CircularProgress';
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
 class CreateEvent extends React.Component {
@@ -18,7 +21,8 @@ class CreateEvent extends React.Component {
       organizerLastName: '',
       organizerPhoneNumber: '',
       time: '',
-      attendees: []
+      attendees: [],
+      submitted: false
     }
     
     this.handleEventNameChange = this.handleEventNameChange.bind(this);
@@ -61,24 +65,28 @@ class CreateEvent extends React.Component {
   handleSubmit (e) {
     e.preventDefault();
     if (this.state.attendees.length > 0) {
-      let infoToPost = this.state;
+      this.setState({
+        submitted: true
+      }, () => {
+        let infoToPost = this.state;
 
-      // Add organizer as an attendee of event, then remove those properties from infoToPost
-      infoToPost.attendees.push({
-        firstName: this.state.organizerFirstName,
-        lastName: this.state.organizerLastName,
-        phoneNumber: this.state.organizerPhoneNumber
-      });
+        // Add organizer as an attendee of event, then remove those properties from infoToPost
+        infoToPost.attendees.push({
+          firstName: this.state.organizerFirstName,
+          lastName: this.state.organizerLastName,
+          phoneNumber: this.state.organizerPhoneNumber
+        });
 
-      delete infoToPost.organizerFirstName;
-      delete infoToPost.organizerLastName;
-      delete infoToPost.organizerPhoneNumber;
-      
-      console.log('Submitting, contents of state:', infoToPost);
-      axios.post('/event', this.state)
-      .then((response) => this.props.history.push('/submit'))
-      .catch((error) => {
-        console.log(this.props);;
+        delete infoToPost.organizerFirstName;
+        delete infoToPost.organizerLastName;
+        delete infoToPost.organizerPhoneNumber;
+        
+        console.log('Submitting, contents of state:', infoToPost);
+        axios.post('/event', this.state)
+        .then((response) => this.props.history.push('/submit'))
+        .catch((error) => {
+          console.log(this.props);;
+        });
       });
     } else {
       window.alert(`Don't forget to invite someone!`);
@@ -120,17 +128,26 @@ class CreateEvent extends React.Component {
   }
 
   render () {
+    let style = {
+      paper : {
+        margin: 20,
+        textAlign: 'center',
+        display: 'inline-block',
+        padding: 5,
+        marginLeft: '11%'
+      },
+      textField: {
+        marginLeft: 20
+      }
+    };
+
     return (
-      <div className="createEvent">
+      <Paper style={style.paper} zDepth={2}>
         <h1> WAYN </h1>
         <h4> Event Details </h4>
         <form onSubmit={this.handleSubmit}>
-          <label>
-            Event Name:
-            <input type="text" value={this.state.eventName} onChange={this.handleEventNameChange} required/>
-          </label>
-          <br/>
-
+        <TextField value={this.state.eventName} onChange={this.handleEventNameChange} required={true} floatingLabelText="Event name" style={style.textField} underlineShow={true} />
+          
           <label>
             Time:
             <input type="time" value={this.state.time} onChange={this.handleTimeChange} required/>
@@ -140,35 +157,19 @@ class CreateEvent extends React.Component {
 
           <br/>
           <br/>
-          Organizer Info:
-          <br/>
+          <h5>Organizer Info:</h5>
 
-          <label>
-            First Name: 
-            <input type="text" value={this.state.organizerFirstName} onChange={this.handleFirstNameChange} required/> 
-          </label>
-          <br/>
+          <TextField value={this.state.organizerFirstName} onChange={this.handleFirstNameChange} required={true} floatingLabelText="First name" style={style.textField} underlineShow={true} />
+          <TextField value={this.state.organizerLastName} onChange={this.handleLastNameChange} required={true} floatingLabelText="Last name" style={style.textField} underlineShow={true} />
+          <TextField value={this.state.organizerPhoneNumber} onChange={this.handlePhoneNumberChange} required={true} floatingLabelText="Phone number" style={style.textField} underlineShow={true} />
+          <RaisedButton type="submit" label="Create Event" onClick={this.handleSubmit} primary={true}/> 
+          {this.state.submitted ? <CircularProgress /> : ''}
 
-          <label>
-            Last Name: 
-            <input type="text" value={this.state.organizerLastName} onChange={this.handleLastNameChange} required/> 
-          </label>
-          <br/>
-
-          <label>
-            Phone Number: 
-            <input type="tel" value={this.state.organizerPhoneNumber} onChange={this.handlePhoneNumberChange} required/> 
-          </label>
-          <br/>
-
-          <RaisedButton primary='true' className="createEventButton" type="submit" value="Create Event" label="Create Event"/>
         </form>
         <br/>
-          <div className="attendeeInfo">
             <AddAttendee addNewAttendee={this.handleNewAttendee} />
             <AttendeeList attendees={this.state.attendees} deleteAttendee={this.handleDeleteAttendee}/>
-          </div>
-      </div>
+      </Paper>
     );
   }
 }
