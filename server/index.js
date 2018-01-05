@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 app.put('/user', controller.put);
 app.post('/user', (req, res) => controller.post(req, res, twilioText));
 
-const client = require('twilio')(keys.accountSid, keys.authToken);
+const client = require('twilio')(process.env.accountSid, process.env.authToken);
 
 // below would actually be put inside the post, but I used the test route to make sure this worked
 
