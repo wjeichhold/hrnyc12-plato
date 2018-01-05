@@ -161,7 +161,7 @@ class CreateEvent extends React.Component {
           </label>
           <br/>
 
-          <RaisedButton backgroundColor="#ff5879" className="createEventButton" type="submit" value="Create Event" label="Create Event"/>
+          <RaisedButton primary='true' className="createEventButton" type="submit" value="Create Event" label="Create Event"/>
         </form>
         <br/>
           <div className="attendeeInfo">
