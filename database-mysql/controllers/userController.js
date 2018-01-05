@@ -1,3 +1,6 @@
+
+var Users = require('../collections/users');
+var Events = require('../collections/events');
 var User = require('../models/user');
 
 const put = (req, res) => {
@@ -21,19 +24,26 @@ const put = (req, res) => {
   });
 }
 
-var insert = function() {
-  console.log('insert functino invoked')
-  knex('users').insert({
-    id: 1,
-    firstName: 'Hoang',
-    lastName: 'Nguyen',
-    phoneNumber: 9168959755,
-    image: 'banana',
-    latitude: 3.33,
-    longitude: 3.33,
-  })
-  .then((results) => console.log(results))
-}
+  var insert = (users, event, twilio) => {
+    console.log('insert functino invoked');
+    return Events.create({
+      eventLatitude: event.eventLatitude,
+      eventLongitude: event.eventLongitude,
+      eventName: event.eventName,
+      eventTime: event.eventTime
+    }).then( (result) => {
+       users.forEach( user => {
+        Users.create({
+          firstName: user.firstName,
+          lastName: user.lastName,
+          phoneNumber: user.phoneNumber,
+          eventId: result.attributes.id
+        }).then( (result) => twilio(result));
+      })
+    // res.send();
+    })
+  }
+
 
 module.exports.put = put;
 exports.insert = insert;
