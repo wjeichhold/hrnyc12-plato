@@ -13,29 +13,7 @@ class EventMap extends React.Component {
         eventLatitude: 40.7505, 
         eventLongitude: -73.9764
       },
-      users : [/*
-        {
-          firstName: 'Hoang',
-          lastName: 'Nguyen',
-          phoneNumber: '1112223333',
-          latitude:40.7413, 
-          longitude:-73.9883
-        },
-        {
-          firstName: 'Jimmy',
-          lastName: 'Kang',
-          phoneNumber: '3334445555',
-          latitude:40.7268, 
-          longitude:-74.0353
-        },
-        {
-          firstName: 'Ryan',
-          lastName: 'Whitworth',
-          phoneNumber: '7778889999',
-          latitude:40.6872, 
-          longitude:-73.9418
-        },
-      */],
+      users : [],
       userLocation: {
         lat: '',
         lng: ''
