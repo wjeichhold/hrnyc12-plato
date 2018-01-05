@@ -6,20 +6,10 @@ var User = require('../database-mysql/models/user');
 var Event = require('../database-mysql/models/event');
 
 var morgan = require('morgan');
-<<<<<<< HEAD
-<<<<<<< HEAD
 var knex = require('knex')
 var coll = require('../database-mysql/collections/users.js')
-=======
 var userControllers = require('../database-mysql/controllers/userController.js')
 var eventController = require('../database-mysql/controllers/eventController.js')
->>>>>>> Add small changes to server and controllers
-=======
-
-var Users = require('../database-mysql/collections/users.js')
-var userControllers = require('../database-mysql/controllers/userController.js')
-var eventController = require('../database-mysql/controllers/eventController.js')
->>>>>>> feat/userPut
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -99,7 +89,9 @@ app.get('/event', (req, res) => {
   new Event({'id': eventId})
     .fetch()
     .then(function(eventData){
-      User.where({'eventId': eventId})
+      User.query(function(qb) {
+        qb.where('eventId','=', eventId).andWhere('latitude', '!=', 'NULL')
+      })
       .fetchAll()
       .then(function(users) {
         res.send({ users:users, event: eventData })
