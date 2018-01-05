@@ -7,30 +7,35 @@ class EventMap extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      eventLocation: {
-        lat:40.7505, 
-        lng:-73.9764
+     event: {
+        eventName: 'Default',
+        eventTime: '12:00',
+        eventLatitude: 40.7505, 
+        eventLongitude: -73.9764
       },
-      users : [
+      users : [/*
         {
           firstName: 'Hoang',
           lastName: 'Nguyen',
           phoneNumber: '1112223333',
-          location: {lat:40.7413, lng:-73.9883}
+          latitude:40.7413, 
+          longitude:-73.9883
         },
         {
           firstName: 'Jimmy',
           lastName: 'Kang',
           phoneNumber: '3334445555',
-          location: {lat:40.7268, lng:-74.0353}
+          latitude:40.7268, 
+          longitude:-74.0353
         },
         {
           firstName: 'Ryan',
           lastName: 'Whitworth',
           phoneNumber: '7778889999',
-          location: {lat:40.6872, lng:-73.9418}
+          latitude:40.6872, 
+          longitude:-73.9418
         },
-      ],
+      */],
       userLocation: {
         lat: '',
         lng: ''
@@ -50,31 +55,45 @@ class EventMap extends React.Component {
   }
 
   handleNewAttendee (attendee) {
-    axios.post('/user', {
-      attendee: attendee,
-      eventId: this.state.eventId
-    })
-    .then((response) => console.log(response))
-    .catch((error) => console.error(error));
+    if(this.isUniqueAttendee(attendee)) {
+      axios.post('/user', {
+        attendee: attendee,
+        eventId: this.state.eventId
+      })
+      .then((response) => console.log(response))
+      .catch((error) => console.error(error));
+    } else {
+      window.alert('Attendee with that phone number already invited!');
+    }
   }
 
+  isUniqueAttendee(attendee) {
+    return this.state.users.reduce((isUnique, currentAttendee) => {
+      return isUnique && attendee.phoneNumber !== currentAttendee.phoneNumber;
+    }, true);
+  }
   getEventId () {
     return this.props.match.params.number;
   }
 
   getServerData () {
-    axios.get('/event', this.state.eventId)
-    .then((response) => console.log('Server response from /GET to /event', response))
+    axios.get('/event', {
+      params: {
+        eventId: this.state.eventId
+      }
+    })
+    .then((response) => {
+      console.log(response.data);
+      console.log(response.data.users[0]);
+      this.setState({
+        event: response.data.event,
+        users: response.data.users
+      });
+    })
     .catch((error) => console.error(error));
   }
 
   sendUserLocation () {
-    console.log('Sending to server:', {
-      userId: this.state.userId,
-      lat: this.state.userLocation.lat,
-      lng: this.state.userLocation.lng
-    });
-
     axios.put('/user', {
       userId: this.state.userId,
       lat: this.state.userLocation.lat,
@@ -105,6 +124,13 @@ class EventMap extends React.Component {
     navigator.geolocation.watchPosition(geoSuccess, geoError);
   }
 
+  getEventLocation () {
+    return {
+      lat: this.state.event.eventLatitude,
+      lng: this.state.event.eventLongitude
+    };
+  }
+
   render () {
     return (
       <div>
@@ -112,7 +138,8 @@ class EventMap extends React.Component {
         <p> Event ID: {this.state.eventId} </p>
         <p> User ID: {this.state.userId} </p>
         <p> Current location: {this.state.userLocation.lat + ',' + this.state.userLocation.lng} </p>
-        <AttendeeMap users={this.state.users} eventCoordinate={this.state.eventLocation} directions={[]}/>
+        {this.state.users.length ? <AttendeeMap users={this.state.users} eventCoordinate={this.getEventLocation()} directions={[]}/>
+        : <p>Map will be rendered when someone uploads their location! </p>}
         <AddAttendee addNewAttendee={this.handleNewAttendee} />
       </div>
     );

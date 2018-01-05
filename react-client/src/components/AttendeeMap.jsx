@@ -25,8 +25,9 @@ const AttendeeMap = compose(
     componentDidMount() {
       const DirectionsService = new google.maps.DirectionsService();
       this.props.users.forEach((user, i) => {
+        console.log(user.latitude, user.longitude, user);
         DirectionsService.route({
-          origin: new google.maps.LatLng(user.location.lat, user.location.lng),
+          origin: new google.maps.LatLng(user.latitude, user.longitude),
           destination: new google.maps.LatLng(this.props.eventCoordinate.lat, this.props.eventCoordinate.lng),
           travelMode: google.maps.TravelMode.TRANSIT,
         }, (result, status) => {
@@ -46,7 +47,7 @@ const AttendeeMap = compose(
   {props.directions.length === props.users.length ?
     props.users.map((user, j) => (
       <MarkerWithLabel 
-        position={user.location}
+        position={{lat: user.latitude, lng: user.longitude}}
         labelAnchor={new google.maps.Point(-10, -10)}
         labelStyle={{background: textColorBackground[j], fontSize: "15px", padding: "4px", borderRadius: "15%",border: "1px solid black"}}
         user={user}
@@ -61,8 +62,7 @@ const AttendeeMap = compose(
       (props.directions.map((direction, i) => (
         <DirectionsRenderer directions={direction} key={i}/>
         )
-      )) : ''}) 
-  }
+      )) : ''}
   </GoogleMap>
 );
 

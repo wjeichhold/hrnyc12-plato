@@ -74,7 +74,12 @@ class CreateEvent extends React.Component {
       delete infoToPost.organizerPhoneNumber;
       
       console.log('Submitting, contents of state:', infoToPost);
-      axios.post('/event', this.state).then((response) => console.log(response));
+      axios.post('/event', this.state)
+      .then((response) => this.props.history.push('/submit'))
+      .catch((error) => {
+        console.log(this.props);
+        this.props.history.push('/submit');
+      });
     } else {
       window.alert(`Don't forget to invite someone!`);
     }
@@ -91,8 +96,8 @@ class CreateEvent extends React.Component {
   }
 
   isUniqueAttendee(attendee) {
-    return this.state.attendees.reduce((isUnique, currentAttendee) => {
-      return isUnique || attendee.phoneNumber === currentAttendee.phoneNumber
+    return this.state.users.reduce((isUnique, currentAttendee) => {
+      return isUnique && attendee.phoneNumber !== currentAttendee.phoneNumber;
     }, true);
   }
 
