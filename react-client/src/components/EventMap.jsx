@@ -102,21 +102,12 @@ class EventMap extends React.Component {
     navigator.geolocation.watchPosition(geoSuccess, geoError);
   }
 
-  getEventLocation () {
-    return {
-      lat: this.state.event.eventLatitude,
-      lng: this.state.event.eventLongitude
-    };
-  }
-
   render () {
     return (
       <div>
-        <h4> Event Map </h4>
-        <p> Event ID: {this.state.eventId} </p>
-        <p> User ID: {this.state.userId} </p>
-        <p> Current location: {this.state.userLocation.lat + ',' + this.state.userLocation.lng} </p>
-        {this.state.users.length ? <AttendeeMap users={this.state.users} eventCoordinate={this.getEventLocation()} directions={[]}/>
+        <h1> Wayn </h1>
+        <h4> Your Event </h4>
+        {this.state.users.length ? <AttendeeMap users={this.state.users} event={this.state.event} directions={[]}/>
         : <p>Map will be rendered when someone uploads their location! </p>}
         <AddAttendee addNewAttendee={this.handleNewAttendee} />
       </div>

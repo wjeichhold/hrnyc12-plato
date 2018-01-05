@@ -77,8 +77,7 @@ class CreateEvent extends React.Component {
       axios.post('/event', this.state)
       .then((response) => this.props.history.push('/submit'))
       .catch((error) => {
-        console.log(this.props);
-        this.props.history.push('/submit');
+        console.log(this.props);;
       });
     } else {
       window.alert(`Don't forget to invite someone!`);
@@ -96,7 +95,7 @@ class CreateEvent extends React.Component {
   }
 
   isUniqueAttendee(attendee) {
-    return this.state.users.reduce((isUnique, currentAttendee) => {
+    return this.state.attendees.reduce((isUnique, currentAttendee) => {
       return isUnique && attendee.phoneNumber !== currentAttendee.phoneNumber;
     }, true);
   }
@@ -122,6 +121,7 @@ class CreateEvent extends React.Component {
   render () {
     return (
       <div className="createEvent">
+        <h1> WAYN </h1>
         <h4> Event Details </h4>
         <form onSubmit={this.handleSubmit}>
           <label>
