@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 
 class LandingPage extends React.Component {
   constructor (props) {
@@ -17,20 +20,32 @@ class LandingPage extends React.Component {
   }
 
   render () {
+    const style = {
+      // height: 100,
+      // width: 100,
+      margin: 25,
+      textAlign: 'center',
+      display: 'inline-block',
+      padding: 25,
+      primaryColor : '#ff5879'
+    };
+
     return (
     <div className="landingPage">
+    <Paper style={style} zDepth={3}>
       <h1>WAYN</h1>
       <h3> Tired of being the first one there? Set up an event with us and we'll take care of the rest. </h3>
-      <Link to='/create'><button>Get Started</button></Link>
+      <Link to='/create'><RaisedButton primary='true'>Get Started</RaisedButton></Link>
       <h3>Already invited?</h3> 
       <label>
-        Enter your event ID: 
+        Enter your event ID
         <input type="text" value={this.state.eventId} onChange={this.handleIdChange} />
       </label>
-      <Link to={'/event/' + this.state.eventId}><button>Submit</button></Link>
+      <Link to={'/event/' + this.state.eventId}><RaisedButton primary='true'>Submit</RaisedButton></Link>
+    </Paper>
     </div>
     )
   }
 }
-
+	
 export default LandingPage;

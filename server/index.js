@@ -31,9 +31,9 @@ var twilioText = (user) => {
   console.log('userObj',user);
   client.messages.create({
         to: `+1${user.attributes.phoneNumber}`,
-        from: `${keys.twilioNumber}`,
+        from: '+12408235168',
         body: `Hey ${user.attributes.firstName} ${user.attributes.lastName}, you've been invited to my event. Please click on the link below to share your location:
-        http://localhost:3000/#/event/${user.attributes.eventId}?userId=${user.id}`,
+        https://wayn-greenfield.herokuapp.com/#/event/${user.attributes.eventId}?userId=${user.id}`,
     })
     .then((message) => console.log('testing', message.sid))
     .catch((err) => {

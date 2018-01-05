@@ -1,3 +1,7 @@
+body {
+  font-family: 'Poppins', sans-serif
+}
+
 .addAttendee {
   padding: 1% 2%;
   margin: 1% 1%;
@@ -22,4 +26,8 @@ ul {
 
 input {
   margin: .5%;
+}
+
+body {
+  background-color: #FFEBEE
 }

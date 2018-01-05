@@ -54,6 +54,7 @@ class AddAttendee extends React.Component {
 
     return (
       <form onSubmit={this.handleSubmit} className="addAttendee">
+
         <h4>Attendee Information</h4>
         <TextField value={this.state.firstName} onChange={this.handleFirstNameChange} required={true} floatingLabelText="First name" style={style.textField} underlineShow={false} />
         <Divider />
@@ -62,6 +63,7 @@ class AddAttendee extends React.Component {
         <TextField value={this.state.phoneNumber} onChange={this.handlePhoneNumberChange} required={true} floatingLabelText="Phone number" style={style.textField} underlineShow={false} />
         <Divider />
         <RaisedButton style={style.raisedButton} label="Add Attendee" onClick={this.handleSubmit} secondary={true} />
+        
       </form>
     )
   }

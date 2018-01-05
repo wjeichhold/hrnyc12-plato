@@ -164,6 +164,7 @@ class CreateEvent extends React.Component {
           <TextField value={this.state.organizerPhoneNumber} onChange={this.handlePhoneNumberChange} required={true} floatingLabelText="Phone number" style={style.textField} underlineShow={true} />
           <RaisedButton type="submit" label="Create Event" onClick={this.handleSubmit} primary={true}/> 
           {this.state.submitted ? <CircularProgress /> : ''}
+
         </form>
         <br/>
             <AddAttendee addNewAttendee={this.handleNewAttendee} />
