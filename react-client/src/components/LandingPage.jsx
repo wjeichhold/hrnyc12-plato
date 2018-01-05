@@ -20,8 +20,9 @@ class LandingPage extends React.Component {
     return (
     <div className="landingPage">
       <h1>WAYN</h1>
-      <Link to='/create'><button>Create Event</button></Link>
-      <h3>OR</h3>
+      <h3> Tired of being the first one there? Set up an event with us and we'll take care of the rest. </h3>
+      <Link to='/create'><button>Get Started</button></Link>
+      <h3>Already invited?</h3> 
       <label>
         Enter your event ID: 
         <input type="text" value={this.state.eventId} onChange={this.handleIdChange} />

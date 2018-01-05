@@ -11,8 +11,6 @@ var Event = require('../database-mysql/models/event');
 
 var coll = require('../database-mysql/collections/users.js')
 var controller = require('../database-mysql/controllers/userController');
-var userControllers = require('../database-mysql/controllers/userController.js')
-var eventController = require('../database-mysql/controllers/eventController.js')
 var Users = require('../database-mysql/collections/users.js')
 
 var app = express();
@@ -21,8 +19,9 @@ var port = process.env.PORT || 3000;
 app.use(morgan('dev'));
 app.use(express.static(__dirname + '/../react-client/dist'));
 app.use(bodyParser.json());
-app.put('/user', userControllers.put);
 
+app.put('/user', controller.put);
+app.post('/user', (req, res) => controller.post(req, res, twilioText));
 
 const client = require('twilio')(keys.accountSid, keys.authToken);
 
@@ -34,7 +33,7 @@ var twilioText = (user) => {
         to: `+1${user.attributes.phoneNumber}`,
         from: `${keys.twilioNumber}`,
         body: `Hey ${user.attributes.firstName} ${user.attributes.lastName}, you've been invited to my event. Please click on the link below to share your location:
-        http://localhost:3000/#/event/${user.attributes.eventId}/?userId=${user.id}`,
+        http://localhost:3000/#/event/${user.attributes.eventId}?userId=${user.id}`,
     })
     .then((message) => console.log('testing', message.sid))
     .catch((err) => {
