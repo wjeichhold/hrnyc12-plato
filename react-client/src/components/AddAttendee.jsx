@@ -61,7 +61,7 @@ class AddAttendee extends React.Component {
           </label>
           <br/>
 
-          <RaisedButton backgroundColor="#ff5879" type="submit" value="Add Attendee" label="Add Attendee"/>
+          <RaisedButton primary='true' type="submit" value="Add Attendee" label="Add Attendee"/>
       </form>
     )
   }
