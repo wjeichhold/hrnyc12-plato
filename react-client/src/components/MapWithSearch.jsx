@@ -15,7 +15,7 @@ const MapWithASearchBox = compose(
     lifecycle({
       componentWillMount() {
         const refs = {}
-  
+
         this.setState({
           bounds: null,
           center: {
@@ -37,7 +37,7 @@ const MapWithASearchBox = compose(
           onPlacesChanged: () => {
             const places = refs.searchBox.getPlaces();
             const bounds = new google.maps.LatLngBounds();
-  
+
             places.forEach(place => {
               if (place.geometry.viewport) {
                 bounds.union(place.geometry.viewport)
@@ -97,10 +97,10 @@ const MapWithASearchBox = compose(
       </SearchBox>
       {props.markers.map((marker, index) => {
         return <Marker key={index} position={marker.position} />
-        }  
+        }
       )}
     </GoogleMap>
   );
-  
+
 
   export default MapWithASearchBox;
