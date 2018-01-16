@@ -3,7 +3,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-
+var keys = require('../config.js')
 var db = require('../database-mysql');
 var User = require('../database-mysql/models/user');
 var Event = require('../database-mysql/models/event');
@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.put('/user', controller.put);
 app.post('/user', (req, res) => controller.post(req, res, twilioText));
 
-const client = require('twilio')('ACba0b015e2e7ec89cf3691c760e6d6159', '9b40b0ece8b1513d4e01daccd53d7e67');
+const client = require('twilio')(keys.twilioAcct, keys.twilioAPI);
 
 // below would actually be put inside the post, but I used the test route to make sure this worked
 
@@ -40,6 +40,11 @@ var twilioText = (user) => {
       console.error(err);
     });
 };
+
+app.post('/userEvents', (req, res) => {
+  console.log('REQ PARAMS:', req.body);
+  res.end('yaaaaaaaay');
+});
 
 app.get('/event', (req, res) => {
   var eventId = req.param('eventId');
