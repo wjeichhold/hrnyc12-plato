@@ -41,6 +41,11 @@ var twilioText = (user) => {
     });
 };
 
+app.post('/userEvents', (req, res) => {
+  console.log('REQ PARAMS:', req.body);
+  res.end('yaaaaaaaay');
+});
+
 app.get('/event', (req, res) => {
   var eventId = req.param('eventId');
   new Event({'id': eventId})
