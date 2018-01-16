@@ -22,11 +22,7 @@ app.use(bodyParser.json());
 app.put('/user', controller.put);
 app.post('/user', (req, res) => controller.post(req, res, twilioText));
 
-<<<<<<< 838e3a5f6cc78dc4a1936bb234d87104d86a6a72
 const client = require('twilio')(keys.twilioAcct, keys.twilioAPI);
-=======
-const client = require('twilio')('ACba0b015e2e7ec89cf3691c760e6d6159', '9b40b0ece8b1513d4e01daccd53d7e67');
->>>>>>> Committing changes to index.jsx LandingPage.jsx and added EventList.jsx
 
 // below would actually be put inside the post, but I used the test route to make sure this worked
 
