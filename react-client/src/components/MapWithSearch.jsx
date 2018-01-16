@@ -6,7 +6,7 @@ const { SearchBox } = require("react-google-maps/lib/components/places/SearchBox
 
 const MapWithASearchBox = compose(
     withProps({
-      googleMapURL: `https://maps.googleapis.com/maps/api/js?key=AIzaSyA3wPEP1-hGvDC0_cmmKv3JRYiKIJukCCU&v=3.exp&libraries=geometry,drawing,places`,
+      googleMapURL: `https://maps.googleapis.com/maps/api/js?key=AIzaSyBsDUz2ugUbyl1uVGC6ivOxk6Ftb1eTFNE&v=3.exp&libraries=geometry,drawing,places`,
       loadingElement: <div style={{ height: `100%` }} />,
       containerElement: <div style={{ height: `400px` }} />,
       mapElement: <div style={{ height: `100%` }} />,
@@ -15,7 +15,7 @@ const MapWithASearchBox = compose(
     lifecycle({
       componentWillMount() {
         const refs = {}
-  
+
         this.setState({
           bounds: null,
           center: {
@@ -37,7 +37,7 @@ const MapWithASearchBox = compose(
           onPlacesChanged: () => {
             const places = refs.searchBox.getPlaces();
             const bounds = new google.maps.LatLngBounds();
-  
+
             places.forEach(place => {
               if (place.geometry.viewport) {
                 bounds.union(place.geometry.viewport)
@@ -97,10 +97,10 @@ const MapWithASearchBox = compose(
       </SearchBox>
       {props.markers.map((marker, index) => {
         return <Marker key={index} position={marker.position} />
-        }  
+        }
       )}
     </GoogleMap>
   );
-  
+
 
   export default MapWithASearchBox;
