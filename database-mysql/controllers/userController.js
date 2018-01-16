@@ -70,7 +70,11 @@ var insert = (users, event, twilio) => {
 }
 
 // Get all events for said user and return array of Event objects
+<<<<<<< 6b2d81cb4e96f85355b46c947cf42d0678022ed2
 // const post = ()
+=======
+// const get = ()
+>>>>>>> Changes to index.js in server and changes in database controller user controller
 
 module.exports.put = put;
 module.exports.insert = insert;
