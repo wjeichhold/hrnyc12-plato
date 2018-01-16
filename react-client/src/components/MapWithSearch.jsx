@@ -1,5 +1,4 @@
 import React from 'react';
-var keys = require('../../../config');
 const _ = require("lodash");
 const { compose, withProps, lifecycle } = require("recompose");
 const { withScriptjs, withGoogleMap, GoogleMap, Marker} = require("react-google-maps");
@@ -7,9 +6,9 @@ const { SearchBox } = require("react-google-maps/lib/components/places/SearchBox
 
 const MapWithASearchBox = compose(
     withProps({
-      googleMapURL: `https://maps.googleapis.com/maps/api/js?key=AIzaSyA3wPEP1-hGvDC0_cmmKv3JRYiKIJukCCU&v=3.exp&libraries=geometry,drawing,places`,
-      loadingElement: <div style={{  height: `100%` }} />,
-      containerElement: <div style={{ height: `200px`, marginLeft: '22%', width: '500px' }} />,
+      googleMapURL: `https://maps.googleapis.com/maps/api/js?key=AIzaSyBsDUz2ugUbyl1uVGC6ivOxk6Ftb1eTFNE&v=3.exp&libraries=geometry,drawing,places`,
+      loadingElement: <div style={{ height: `100%` }} />,
+      containerElement: <div style={{ height: `400px` }} />,
       mapElement: <div style={{ height: `100%` }} />,
     }),
 

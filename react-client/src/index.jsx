@@ -7,7 +7,7 @@ import LandingPage from './components/LandingPage.jsx';
 import CreateEvent from './components/CreateEvent.jsx';
 import EventMap from './components/EventMap.jsx';
 import LoadingPage from './components/LoadingPage.jsx';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 
 
 class App extends React.Component {

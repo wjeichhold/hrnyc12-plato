@@ -3,8 +3,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-
-var keys = require('../config.js');
+var keys = require('../config.js')
 var db = require('../database-mysql');
 var User = require('../database-mysql/models/user');
 var Event = require('../database-mysql/models/event');
@@ -23,7 +22,7 @@ app.use(bodyParser.json());
 app.put('/user', controller.put);
 app.post('/user', (req, res) => controller.post(req, res, twilioText));
 
-const client = require('twilio')(process.env.accountSid, process.env.authToken);
+const client = require('twilio')(keys.twilioAcct, keys.twilioAPI);
 
 // below would actually be put inside the post, but I used the test route to make sure this worked
 
@@ -31,7 +30,7 @@ var twilioText = (user) => {
   console.log('userObj',user);
   client.messages.create({
         to: `+1${user.attributes.phoneNumber}`,
-        from: '+12408235168',
+        from: '+16174405251',
         body: `Hey ${user.attributes.firstName} ${user.attributes.lastName}, you've been invited to my event. Please click on the link below to share your location:
         https://wayn-greenfield.herokuapp.com/#/event/${user.attributes.eventId}?userId=${user.id}`,
     })
