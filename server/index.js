@@ -3,7 +3,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var keys = require('./config.js')
+var keys = require('../config.js')
 var db = require('../database-mysql');
 var User = require('../database-mysql/models/user');
 var Event = require('../database-mysql/models/event');
@@ -32,7 +32,7 @@ app.post('/user', (req, res) => controller.post(req, res, twilioText));
 
 app.post('/server/lyft', (req, res) => {
   console.log(req.body)
-  
+
   var headers = {
     'Content-Type': 'application/json'
 };
@@ -52,7 +52,7 @@ var test = axios.create({
 test.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
   var USER_TOKEN = data.data.access_token
   console.log('TOLKEN', USER_TOKEN)
-  var AuthStr = 'Bearer '.concat(USER_TOKEN); 
+  var AuthStr = 'Bearer '.concat(USER_TOKEN);
 // ?end_lng=-74.0101&start_lng=-73.9764&end_lat=40.7066&start_lat=40.7505
   var lyft = axios.create({
     headers: { Authorization: AuthStr },
@@ -131,7 +131,7 @@ var test = axios.create({
 test.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
   var USER_TOKEN = data.data.access_token
   console.log('TOLKEN', USER_TOKEN)
-  var AuthStr = 'Bearer '.concat(USER_TOKEN); 
+  var AuthStr = 'Bearer '.concat(USER_TOKEN);
 // ?end_lng=-74.0101&start_lng=-73.9764&end_lat=40.7066&start_lat=40.7505
   var lyft = axios.create({
     headers: { Authorization: AuthStr },
