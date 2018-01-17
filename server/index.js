@@ -8,6 +8,7 @@ var db = require('../database-mysql');
 var User = require('../database-mysql/models/user');
 var Event = require('../database-mysql/models/event');
 
+
 var coll = require('../database-mysql/collections/users.js')
 var controller = require('../database-mysql/controllers/userController');
 var Users = require('../database-mysql/collections/users.js')
@@ -42,9 +43,47 @@ var twilioText = (user) => {
 };
 
 app.post('/userEvents', (req, res) => {
-  console.log('REQ PARAMS:', req.body);
-  res.end('yaaaaaaaay');
+    User.query((qb) => {
+      qb.select('*').from('users').where({
+        firstName: req.body.name,
+        phoneNumber: req.body.number
+      })
+      .then((response) => {
+        res.send(response);
+      })
+    })
 });
+
+app.post('/usersEvents', (req, res) => {
+  let promises = [];
+  req.body.enteredUserInfo.forEach((user) => {
+    Event.query((qb) => {
+      promises.push(qb.select('*').from('events').where({
+        id: user.eventId
+      }))
+    })
+  })
+  Promise.all(promises)
+  .then((result) => {
+    res.send(result);
+  })
+})
+
+app.post('/eventAttendees', (req, res) => {
+  let promises = [];
+  console.log('made it to server event attendees')
+  req.body.enteredUsersEvents.forEach((evt) => {
+    User.query((qb) => {
+      promises.push(qb.select('*').from('users').where({
+        eventId: evt.id
+      }))
+    })
+  })
+  Promise.all(promises)
+  .then((result) => {
+    res.send(result);
+  })
+})
 
 app.get('/event', (req, res) => {
   var eventId = req.param('eventId');
