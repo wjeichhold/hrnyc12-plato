@@ -75,82 +75,6 @@ token.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
 
 const client = require('twilio')(keys.config.twilioAcct, keys.config.twilioAPI);
 
-// below would actually be put inside the post, but I used the test route to make sure this worked
-
-
-app.get('/server/test' , (req, res) => {
-
-
-
-// var options = {
-//     url: 'https://api.lyft.com/oauth/token',
-//     method: 'POST',
-//     headers: headers,
-//     body: dataString,
-//     auth: {
-//         'user': 'mcGXiF0snpMA',
-//         'pass': 'LbAsGZQk91aN3jZ1kpkjI6OyCktx-N0e'
-//     }
-// };
-
-// function callback(error, response, body) {
-//     if (!error) {
-//         console.log('did this work', body);
-//     }
-// }
-
-// request(options, callback);
-
-
-// var instance = axios.create({
-//   baseURL: 'https://some-domain.com/api/',
-//   timeout: 1000,
-//   headers: {'X-Custom-Header': 'foobar'}
-// });
-// var dataString = {"grant_type": "client_credentials", "scope": "public"};
-
-
-var headers = {
-    'Content-Type': 'application/json'
-};
-
-var dataString = {"grant_type": "client_credentials", "scope": "public"};
-
-var test = axios.create({
-    headers: headers,
-    auth: {
-        username: 'mcGXiF0snpMA',
-        password: 'LbAsGZQk91aN3jZ1kpkjI6OyCktx-N0e'
-    }
-})
-
-
-
-test.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
-  var USER_TOKEN = data.data.access_token
-  console.log('TOLKEN', USER_TOKEN)
-  var AuthStr = 'Bearer '.concat(USER_TOKEN); 
-// ?end_lng=-74.0101&start_lng=-73.9764&end_lat=40.7066&start_lat=40.7505
-  var lyft = axios.create({
-    headers: { Authorization: AuthStr },
-    params: {
-      start_lat: 40.7505,
-      start_lng: -73.9764,
-      end_lat: 40.7066,
-      end_lng: -74.0101,
-    }
-  })
-
-  lyft.get('https://api.lyft.com/v1/cost').then((data) => {
-    console.log('did we get cool stuff?', data.data)
-    res.send(data.data)
-  }).catch((err) => {
-    console.log(err)
-    res.send('no bueno')
-  })
-}).catch((err) => console.log(err))
-
-})
 
 // var twilioText = (user) => {
 //   console.log('userObj',user);
@@ -203,12 +127,7 @@ app.post('/eventAttendees', (req, res) => {
         eventId: evt.id
       }))
     })
-  })
-  Promise.all(promises)
-  .then((result) => {
-    res.send(result);
-  })
-})
+
 
 app.get('/event', (req, res) => {
   var eventId = req.param('eventId');
