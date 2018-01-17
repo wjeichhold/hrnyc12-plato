@@ -5,7 +5,7 @@ import AttendeeMap from './AttendeeMap.jsx';
 import AddAttendee from './AddAttendee.jsx';
 import Paper from 'material-ui/Paper';
 import Lyft from './lyft.jsx';
-import ChatWindow from './ChatWindow.jsx'
+import ChatWindow from './ChatWindow.jsx';
 
 class EventMap extends React.Component {
   constructor (props) {
@@ -157,6 +157,7 @@ class EventMap extends React.Component {
         <div style={{float:'right'}}>
         <Lyft getLyftEstimates={this.getLyftEstimates} cost={this.state.lyftCost} time={this.state.lyftTime} />
         </div>
+        <ChatWindow eventId={this.state.eventId}/>
       </Paper>
     );
   }

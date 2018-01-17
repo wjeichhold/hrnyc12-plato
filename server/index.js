@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var keys = require('./config.js')
+var keys = require('../config.js')
 var db = require('../database-mysql');
 var User = require('../database-mysql/models/user');
 var Event = require('../database-mysql/models/event');
@@ -13,6 +13,8 @@ var axios = require('axios')
 var request = require('request');
 
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
 
 app.use(morgan('dev'));
@@ -24,13 +26,13 @@ app.post('/user', (req, res) => controller.post(req, res, twilioText));
 
 app.post('/openTable', (req, res) => {
   openTable(req.body, (data) => {
-    console.log('inside server', data)
+    // console.log('inside server', data)
     res.send(data)
   })
   })
 
 app.post('/server/lyft', (req, res) => {
-  console.log(req.body)
+  // console.log(req.body)
 
   var headers = {
     'Content-Type': 'application/json'
@@ -41,8 +43,8 @@ var dataString = {"grant_type": "client_credentials", "scope": "public"};
 var token = axios.create({
     headers: headers,
     auth: {
-        username: keys.config.lyftUser,
-        password: keys.config.lyftPass
+        username: keys.lyftUser,
+        password: keys.lyftPass
     }
 })
 
@@ -50,7 +52,7 @@ var token = axios.create({
 
 token.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
   var USER_TOKEN = data.data.access_token
-  console.log('TOLKEN', USER_TOKEN)
+  // console.log('TOLKEN', USER_TOKEN)
   var AuthStr = 'Bearer '.concat(USER_TOKEN);
 // ?end_lng=-74.0101&start_lng=-73.9764&end_lat=40.7066&start_lat=40.7505
   var lyft = axios.create({
@@ -64,7 +66,7 @@ token.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
   })
 
   lyft.get('https://api.lyft.com/v1/cost').then((data) => {
-    console.log('did we get cool stuff?', data.data)
+    // console.log('did we get cool stuff?', data.data)
     res.send(data.data)
   }).catch((err) => {
     console.log(err)
@@ -74,7 +76,7 @@ token.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
 
 })
 
-const client = require('twilio')(keys.config.twilioAcct, keys.config.twilioAPI);
+const client = require('twilio')(keys.twilioAcct, keys.twilioAPI);
 
 var twilioText = (user) => {
    console.log('userObj',user);
@@ -174,10 +176,25 @@ app.post('/event', (req, res) => {
     .then(() => res.sendStatus(200));
 });
 
-io.on('connection', (socket) => {
-  console.log('a user connected');
+
+io.on('connection', function(socket) {
+  let roomName = '';
+  console.log('a user is connected');
+  socket.on('room', (room) => {
+    console.log('what room we in?', room)
+    roomName = room;
+    socket.join(room);
+  });
+  socket.on('chat message', function(msg) {
+    io.sockets.in(roomName).emit('chat message', msg);
+  });
+  socket.on('disconnect', function(socket) {
+    console.log('a user has disconnected');
+  });
 });
 
-app.listen(port, function() {
+
+
+http.listen(port, function() {
   console.log('listening on port,', port);
 });
