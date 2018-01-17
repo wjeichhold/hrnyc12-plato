@@ -1,8 +1,10 @@
 import React from 'react';
 import axios from 'axios';
+import RaisedButton from 'material-ui/RaisedButton';
 import AttendeeMap from './AttendeeMap.jsx';
 import AddAttendee from './AddAttendee.jsx';
 import Paper from 'material-ui/Paper';
+import Lyft from './lyft.jsx'
 
 class EventMap extends React.Component {
   constructor (props) {
@@ -15,6 +17,8 @@ class EventMap extends React.Component {
         eventLongitude: -73.9764
       },
       users : [],
+      lyftTime: 0,
+      lyftCost: 0,
       userLocation: {
         lat: '',
         lng: ''
@@ -25,7 +29,9 @@ class EventMap extends React.Component {
 
     this.handleNewAttendee = this.handleNewAttendee.bind(this);
     this.getServerData = this.getServerData.bind(this)
+    this.getLyftEstimates = this.getLyftEstimates.bind(this)
     this.getUserLocation();
+    this.getLyftEstimates()
   }
   
   componentDidMount () {
@@ -78,8 +84,30 @@ class EventMap extends React.Component {
       lat: this.state.userLocation.lat,
       lng: this.state.userLocation.lng
     })
-    .then((response) => console.log(response))
+    .then((response) => {
+      console.log(response);
+    })
     .catch((error) => console.error(error));
+  }
+
+  getLyftEstimates() {
+    var payload = {
+      user : {
+        lat : this.state.userLocation.lat,
+        lng : this.state.userLocation.lng
+      },
+      event : {
+        lat : this.state.event.eventLatitude,
+        lng : this.state.event.eventLongitude
+      }
+    }
+
+    axios.post('/server/lyft', payload).then((data) => {
+      console.log('hiya', this)
+      var cost = data.data.cost_estimates[2].estimated_cost_cents_max
+      var time = data.data.cost_estimates[2].estimated_duration_seconds
+      this.setState({lyftCost: cost, lyftTime: time})
+    })
   }
 
   getUserId () {
@@ -113,6 +141,11 @@ class EventMap extends React.Component {
         marginLeft: '18%'
       }
     }
+    const styles = theme => ({
+  badge: {
+    margin: `0 ${theme.spacing.unit * 2}px`,
+  },
+})
     return (
       <Paper style={style.paper} zDepth={2}>
         <h1> Wayn </h1>
@@ -120,6 +153,9 @@ class EventMap extends React.Component {
         {this.state.users.length ? <AttendeeMap users={this.state.users} event={this.state.event} directions={[]}/>
         : <p>Map will be rendered when someone uploads their location! </p>}
         <AddAttendee addNewAttendee={this.handleNewAttendee} />
+        <div style={{float:'right'}}>
+        <Lyft getLyftEstimates={this.getLyftEstimates} cost={this.state.lyftCost} time={this.state.lyftTime} />
+        </div>
       </Paper>
     );
   }

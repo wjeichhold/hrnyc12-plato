@@ -3,7 +3,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var keys = require('../config.js')
+var keys = require('./config.js')
 var db = require('../database-mysql');
 var User = require('../database-mysql/models/user');
 var Event = require('../database-mysql/models/event');
@@ -11,6 +11,8 @@ var Event = require('../database-mysql/models/event');
 var coll = require('../database-mysql/collections/users.js')
 var controller = require('../database-mysql/controllers/userController');
 var Users = require('../database-mysql/collections/users.js')
+var axios = require('axios')
+var request = require('request');
 
 var app = express();
 var port = process.env.PORT || 3000;
@@ -22,24 +24,146 @@ app.use(bodyParser.json());
 app.put('/user', controller.put);
 app.post('/user', (req, res) => controller.post(req, res, twilioText));
 
-const client = require('twilio')(keys.twilioAcct, keys.twilioAPI);
+
+
+app.post('/server/lyft', (req, res) => {
+  console.log(req.body)
+  
+  var headers = {
+    'Content-Type': 'application/json'
+};
+
+var dataString = {"grant_type": "client_credentials", "scope": "public"};
+
+var test = axios.create({
+    headers: headers,
+    auth: {
+        username: 'mcGXiF0snpMA',
+        password: 'LbAsGZQk91aN3jZ1kpkjI6OyCktx-N0e'
+    }
+})
+
+
+
+test.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
+  var USER_TOKEN = data.data.access_token
+  console.log('TOLKEN', USER_TOKEN)
+  var AuthStr = 'Bearer '.concat(USER_TOKEN); 
+// ?end_lng=-74.0101&start_lng=-73.9764&end_lat=40.7066&start_lat=40.7505
+  var lyft = axios.create({
+    headers: { Authorization: AuthStr },
+    params: {
+      start_lat: 40.7505,
+      start_lng: -73.9764,
+      end_lat: 40.7066,
+      end_lng: -74.0101,
+    }
+  })
+
+  lyft.get('https://api.lyft.com/v1/cost').then((data) => {
+    console.log('did we get cool stuff?', data.data)
+    res.send(data.data)
+  }).catch((err) => {
+    console.log(err)
+    res.send('no bueno')
+  })
+}).catch((err) => console.log(err))
+
+})
+
+// const client = require('twilio')(keys.twilioAcct, keys.twilioAPI);
 
 // below would actually be put inside the post, but I used the test route to make sure this worked
 
-var twilioText = (user) => {
-  console.log('userObj',user);
-  client.messages.create({
-        to: `+1${user.attributes.phoneNumber}`,
-        from: '+16174405251',
-        body: `Hey ${user.attributes.firstName} ${user.attributes.lastName}, you've been invited to my event. Please click on the link below to share your location:
-        https://wayn-greenfield.herokuapp.com/#/event/${user.attributes.eventId}?userId=${user.id}`,
-    })
-    .then((message) => console.log('testing', message.sid))
-    .catch((err) => {
-      console.error('Could not notify administrator');
-      console.error(err);
-    });
+
+app.get('/server/test' , (req, res) => {
+
+
+
+// var options = {
+//     url: 'https://api.lyft.com/oauth/token',
+//     method: 'POST',
+//     headers: headers,
+//     body: dataString,
+//     auth: {
+//         'user': 'mcGXiF0snpMA',
+//         'pass': 'LbAsGZQk91aN3jZ1kpkjI6OyCktx-N0e'
+//     }
+// };
+
+// function callback(error, response, body) {
+//     if (!error) {
+//         console.log('did this work', body);
+//     }
+// }
+
+// request(options, callback);
+
+
+// var instance = axios.create({
+//   baseURL: 'https://some-domain.com/api/',
+//   timeout: 1000,
+//   headers: {'X-Custom-Header': 'foobar'}
+// });
+// var dataString = {"grant_type": "client_credentials", "scope": "public"};
+
+
+var headers = {
+    'Content-Type': 'application/json'
 };
+
+var dataString = {"grant_type": "client_credentials", "scope": "public"};
+
+var test = axios.create({
+    headers: headers,
+    auth: {
+        username: 'mcGXiF0snpMA',
+        password: 'LbAsGZQk91aN3jZ1kpkjI6OyCktx-N0e'
+    }
+})
+
+
+
+test.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
+  var USER_TOKEN = data.data.access_token
+  console.log('TOLKEN', USER_TOKEN)
+  var AuthStr = 'Bearer '.concat(USER_TOKEN); 
+// ?end_lng=-74.0101&start_lng=-73.9764&end_lat=40.7066&start_lat=40.7505
+  var lyft = axios.create({
+    headers: { Authorization: AuthStr },
+    params: {
+      start_lat: 40.7505,
+      start_lng: -73.9764,
+      end_lat: 40.7066,
+      end_lng: -74.0101,
+    }
+  })
+
+  lyft.get('https://api.lyft.com/v1/cost').then((data) => {
+    console.log('did we get cool stuff?', data.data)
+    res.send(data.data)
+  }).catch((err) => {
+    console.log(err)
+    res.send('no bueno')
+  })
+}).catch((err) => console.log(err))
+
+})
+
+// var twilioText = (user) => {
+//   console.log('userObj',user);
+//   client.messages.create({
+//         to: `+1${user.attributes.phoneNumber}`,
+//         from: '+16174405251',
+//         body: `Hey ${user.attributes.firstName} ${user.attributes.lastName}, you've been invited to my event. Please click on the link below to share your location:
+//         https://wayn-greenfield.herokuapp.com/#/event/${user.attributes.eventId}?userId=${user.id}`,
+//     })
+//     .then((message) => console.log('testing', message.sid))
+//     .catch((err) => {
+//       console.error('Could not notify administrator');
+//       console.error(err);
+//     });
+// };
 
 app.post('/userEvents', (req, res) => {
   console.log('REQ PARAMS:', req.body);
