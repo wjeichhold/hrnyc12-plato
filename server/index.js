@@ -3,11 +3,11 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var keys = require('./config.js')
+var keys = require('../config.js')
 var db = require('../database-mysql');
 var User = require('../database-mysql/models/user');
 var Event = require('../database-mysql/models/event');
-
+var openTable = require('./openTableAPI.js').openTableAPI
 
 var coll = require('../database-mysql/collections/users.js')
 var controller = require('../database-mysql/controllers/userController');
@@ -28,7 +28,12 @@ app.use(bodyParser.json());
 app.put('/user', controller.put);
 app.post('/user', (req, res) => controller.post(req, res, twilioText));
 
-
+app.post('/openTable', (req, res) => {
+  openTable(req.body, (data) => {
+    console.log('inside server', data)
+    res.send(data)
+  })
+  })
 
 app.post('/server/lyft', (req, res) => {
   console.log(req.body)
@@ -118,15 +123,7 @@ var headers = {
 
 var dataString = {"grant_type": "client_credentials", "scope": "public"};
 
-var test = axios.create({
-    headers: headers,
-    auth: {
-        username: 'mcGXiF0snpMA',
-        password: 'LbAsGZQk91aN3jZ1kpkjI6OyCktx-N0e'
-    }
-})
-
-
+var test = null;
 
 test.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
   var USER_TOKEN = data.data.access_token
