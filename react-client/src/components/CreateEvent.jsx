@@ -22,7 +22,9 @@ class CreateEvent extends React.Component {
       organizerPhoneNumber: '',
       time: '',
       attendees: [],
-      submitted: false
+      submitted: false,
+      locale: null,
+      resLink: null
     }
     
     this.handleEventNameChange = this.handleEventNameChange.bind(this);
@@ -34,6 +36,7 @@ class CreateEvent extends React.Component {
     this.handlePhoneNumberChange = this.handlePhoneNumberChange.bind(this);
     this.handleLocationChange = this.handleLocationChange.bind(this);
     this.handleDeleteAttendee = this.handleDeleteAttendee.bind(this);
+    this.setLocale = this.setLocale.bind(this);
   }
   
   handleDeleteAttendee (attendee) {
@@ -47,7 +50,7 @@ class CreateEvent extends React.Component {
   handleLocationChange (location) {
     this.setState({
       location: location
-    });
+    })
   }
 
   handleEventNameChange (e) {
@@ -61,6 +64,14 @@ class CreateEvent extends React.Component {
       time: e.target.value
     });
   }
+
+  setLocale(locale) {
+    this.setState({
+      locale: locale
+    }, () => {axios.post('/opentable', {locale: locale}).then((response) => {
+      this.setState({resLink: response.data.restaurants[0].reserve_url})
+    })
+  })}
 
   handleSubmit (e) {
     e.preventDefault();
@@ -152,13 +163,14 @@ class CreateEvent extends React.Component {
             Time:
             <input type="time" value={this.state.time} onChange={this.handleTimeChange} required/>
           </label>
+          <a href={this.state.resLink} style={{paddingleft: '30px'}}>Book a reservation!</a>
+          <img style={{width:'80px', height:'auto', paddingTop: '10px', paddingLeft:'15px'}} src='https://assets.brandfolder.com/o3omnr-9qhjhc-eg4b40/v/411576/view.png'/>
           <br/>
-          <MapWithSearchBox getEventCoordinate={this.handleLocationChange}/>
+          <MapWithSearchBox getEventCoordinate={this.handleLocationChange} setLocale={this.setLocale}/>
 
           <br/>
           <br/>
           <h5>Organizer Info:</h5>
-
           <TextField value={this.state.organizerFirstName} onChange={this.handleFirstNameChange} required={true} floatingLabelText="First name" style={style.textField} underlineShow={true} />
           <TextField value={this.state.organizerLastName} onChange={this.handleLastNameChange} required={true} floatingLabelText="Last name" style={style.textField} underlineShow={true} />
           <TextField value={this.state.organizerPhoneNumber} onChange={this.handlePhoneNumberChange} required={true} floatingLabelText="Phone number" style={style.textField} underlineShow={true} />

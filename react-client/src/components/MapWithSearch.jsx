@@ -15,7 +15,7 @@ const MapWithASearchBox = compose(
     lifecycle({
       componentWillMount() {
         const refs = {}
-
+  
         this.setState({
           bounds: null,
           center: {
@@ -37,7 +37,7 @@ const MapWithASearchBox = compose(
           onPlacesChanged: () => {
             const places = refs.searchBox.getPlaces();
             const bounds = new google.maps.LatLngBounds();
-
+  
             places.forEach(place => {
               if (place.geometry.viewport) {
                 bounds.union(place.geometry.viewport)
@@ -54,8 +54,9 @@ const MapWithASearchBox = compose(
               center: nextCenter,
               markers: nextMarkers,
             }, () => {
-              console.log(this.state);
+              console.log(refs.searchBox.state.__SECRET_SEARCH_BOX_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.gm_accessors_.places.Jc.formattedPrediction);
               this.props.getEventCoordinate({'lat': this.state.center.lat(),'lng': this.state.center.lng()})
+              this.props.setLocale(refs.searchBox.state.__SECRET_SEARCH_BOX_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.gm_accessors_.places.Jc.formattedPrediction)
             });
             // refs.map.fitBounds(bounds);
           },
@@ -97,10 +98,10 @@ const MapWithASearchBox = compose(
       </SearchBox>
       {props.markers.map((marker, index) => {
         return <Marker key={index} position={marker.position} />
-        }
+        }  
       )}
     </GoogleMap>
   );
-
+  
 
   export default MapWithASearchBox;

@@ -10,6 +10,7 @@ const AttendeeListItem = ({attendee, deleteAttendee}) => {
 
   return (
     <Chip onRequestDelete={handleButtonClick}>
+      <Avatar size={32}>{attendee.firstName[0] + attendee.lastName[0]}</Avatar>
       {attendee.firstName + ' ' + attendee.lastName + ', ' + attendee.phoneNumber}
     </Chip>
   )
