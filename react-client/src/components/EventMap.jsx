@@ -4,7 +4,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import AttendeeMap from './AttendeeMap.jsx';
 import AddAttendee from './AddAttendee.jsx';
 import Paper from 'material-ui/Paper';
-import Lyft from './lyft.jsx'
+import Lyft from './lyft.jsx';
+import ChatWindow from './ChatWindow.jsx';
 
 class EventMap extends React.Component {
   constructor (props) {
@@ -13,7 +14,7 @@ class EventMap extends React.Component {
      event: {
         eventName: 'Default',
         eventTime: '12:00',
-        eventLatitude: 40.7505, 
+        eventLatitude: 40.7505,
         eventLongitude: -73.9764
       },
       users : [],
@@ -33,7 +34,7 @@ class EventMap extends React.Component {
     this.getUserLocation();
     this.getLyftEstimates()
   }
-  
+
   componentDidMount () {
     this.getServerData();
     setInterval(this.getServerData, 1000 * 30);
@@ -156,10 +157,10 @@ class EventMap extends React.Component {
         <div style={{float:'right'}}>
         <Lyft getLyftEstimates={this.getLyftEstimates} cost={this.state.lyftCost} time={this.state.lyftTime} />
         </div>
+        <ChatWindow eventId={this.state.eventId}/>
       </Paper>
     );
   }
 }
 
 export default EventMap;
-
