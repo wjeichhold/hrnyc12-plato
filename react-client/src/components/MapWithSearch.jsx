@@ -56,6 +56,7 @@ const MapWithASearchBox = compose(
             }, () => {
               console.log(this.state);
               this.props.getEventCoordinate({'lat': this.state.center.lat(),'lng': this.state.center.lng()})
+              this.props.setLocale(refs.searchBox.state.__SECRET_SEARCH_BOX_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.gm_accessors_.places.Jc.formattedPrediction)
             });
             // refs.map.fitBounds(bounds);
           },

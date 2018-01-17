@@ -1,5 +1,3 @@
-// import { read } from 'fs';
-
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
@@ -7,16 +5,16 @@ var keys = require('../config.js')
 var db = require('../database-mysql');
 var User = require('../database-mysql/models/user');
 var Event = require('../database-mysql/models/event');
-
-
+var openTable = require('./openTableAPI.js').openTableAPI
 var coll = require('../database-mysql/collections/users.js')
 var controller = require('../database-mysql/controllers/userController');
 var Users = require('../database-mysql/collections/users.js')
+var axios = require('axios')
+var request = require('request');
 
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-
 var port = process.env.PORT || 3000;
 
 app.use(morgan('dev'));
@@ -26,14 +24,72 @@ app.use(bodyParser.json());
 app.put('/user', controller.put);
 app.post('/user', (req, res) => controller.post(req, res, twilioText));
 
+app.post('/openTable', (req, res) => {
+  openTable(req.body, (data) => {
+    // console.log('inside server', data)
+    res.send(data)
+  })
+  })
+
+app.post('/server/lyft', (req, res) => {
+<<<<<<< HEAD
+  // console.log(req.body)
+=======
+  console.log(req.body)
+>>>>>>> eb69708a20b4ce64ba8fff9474464f7c5fbf622e
+
+  var headers = {
+    'Content-Type': 'application/json'
+};
+
+var dataString = {"grant_type": "client_credentials", "scope": "public"};
+
+var token = axios.create({
+    headers: headers,
+    auth: {
+        username: keys.lyftUser,
+        password: keys.lyftPass
+    }
+})
+
+
+
+token.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
+  var USER_TOKEN = data.data.access_token
+<<<<<<< HEAD
+  // console.log('TOLKEN', USER_TOKEN)
+=======
+  console.log('TOLKEN', USER_TOKEN)
+>>>>>>> eb69708a20b4ce64ba8fff9474464f7c5fbf622e
+  var AuthStr = 'Bearer '.concat(USER_TOKEN);
+// ?end_lng=-74.0101&start_lng=-73.9764&end_lat=40.7066&start_lat=40.7505
+  var lyft = axios.create({
+    headers: { Authorization: AuthStr },
+    params: {
+      start_lat: 40.7505,
+      start_lng: -73.9764,
+      end_lat: 40.7066,
+      end_lng: -74.0101,
+    }
+  })
+
+  lyft.get('https://api.lyft.com/v1/cost').then((data) => {
+    // console.log('did we get cool stuff?', data.data)
+    res.send(data.data)
+  }).catch((err) => {
+    console.log(err)
+    res.send('no bueno')
+  })
+}).catch((err) => console.log(err))
+
+})
+
 const client = require('twilio')(keys.twilioAcct, keys.twilioAPI);
 
-// below would actually be put inside the post, but I used the test route to make sure this worked
-
 var twilioText = (user) => {
-  console.log('userObj',user);
-  client.messages.create({
-        to: `+1${user.attributes.phoneNumber}`,
+   console.log('userObj',user);
+   client.messages.create({
+         to: `+1${user.attributes.phoneNumber}`,
         from: '+16174405251',
         body: `Hey ${user.attributes.firstName} ${user.attributes.lastName}, you've been invited to my event. Please click on the link below to share your location:
         https://wayn-greenfield.herokuapp.com/#/event/${user.attributes.eventId}?userId=${user.id}`,
@@ -82,11 +138,12 @@ app.post('/eventAttendees', (req, res) => {
       }))
     })
   })
-  Promise.all(promises)
-  .then((result) => {
+    Promise.all(promises)
+    .then((result) => {
     res.send(result);
   })
 })
+
 
 app.get('/event', (req, res) => {
   var eventId = req.param('eventId');
@@ -127,7 +184,28 @@ app.post('/event', (req, res) => {
     .then(() => res.sendStatus(200));
 });
 
+io.on('connection', (socket) => {
+  console.log('a user connected');
+});
 
-app.listen(port, function() {
+io.on('connection', function(socket) {
+  let roomName = '';
+  console.log('a user is connected');
+  socket.on('room', (room) => {
+    console.log('what room we in?', room)
+    roomName = room;
+    socket.join(room);
+  });
+  socket.on('chat message', function(msg) {
+    io.sockets.in(roomName).emit('chat message', msg);
+  });
+  socket.on('disconnect', function(socket) {
+    console.log('a user has disconnected');
+  });
+});
+
+
+
+http.listen(port, function() {
   console.log('listening on port,', port);
 });
