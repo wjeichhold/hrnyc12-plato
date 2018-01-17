@@ -1,65 +1,23 @@
 import React from 'react';
 import axios from 'axios';
-import EventItem from './EventItem.jsx'
 
 class EventList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: this.props.match.params.name,
-      number: this.props.match.params.number,
-      enteredUserInfo: [],
-      enteredUsersEvents: [],
-      attendees: []
+      number: this.props.match.params.number
     }
-    this.getEvents = this.getEvents.bind(this);
-    this.getAttendees = this.getAttendees.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidMount() {
+  handleClick() {
     axios.post('/userEvents', {
       name: this.state.name,
       number: this.state.number
     })
     .then((response) => {
-      this.setState({
-        enteredUserInfo: response.data
-      })
-    })
-    .then(this.getEvents)
-    .catch((err) => {
-      console.error(err);
-    })
-  }
-
-  getEvents() {
-    axios.post('/usersEvents', {
-      enteredUserInfo: this.state.enteredUserInfo
-    })
-    .then((response) => {
-      let arr = [];
-      response.data.forEach((item) => {
-        arr = arr.concat(item);
-      })
-      this.setState({
-        enteredUsersEvents: arr
-      });
-    })
-    .then(this.getAttendees)
-    .catch((err) => {
-      console.error(err);
-    })
-  }
-
-  getAttendees() {
-    axios.post('/eventAttendees', {
-      enteredUsersEvents: this.state.enteredUsersEvents
-    })
-    .then((response) => {
-      console.log('GET ATTENDEES RESPONSE', response.data);
-      this.setState({
-        attendees: response.data
-      });
+      console.log(response);
     })
     .catch((err) => {
       console.error(err);
@@ -69,10 +27,7 @@ class EventList extends React.Component {
   render() {
     return (
       <div>
-        {this.state.enteredUsersEvents.map((item, ind) => {
-          console.log("ATTENDEES", this.state.attendees[ind]);
-          return <EventItem evt={item} attendees={this.state.attendees[ind]} key={ind}/>
-        })}
+        <div onClick={this.handleClick}>{ this.state.name + ', ' + this.state.number }</div>
       </div>
     )
   }

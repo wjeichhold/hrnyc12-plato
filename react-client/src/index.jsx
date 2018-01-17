@@ -7,7 +7,7 @@ import LandingPage from './components/LandingPage.jsx';
 import CreateEvent from './components/CreateEvent.jsx';
 import EventMap from './components/EventMap.jsx';
 import LoadingPage from './components/LoadingPage.jsx';
-import EventList from './components/EventList.jsx'
+
 
 
 class App extends React.Component {
@@ -18,13 +18,12 @@ class App extends React.Component {
   render () {
     return (
       <main>
-
+        
         <Switch>
           <Route exact path="/" component={LandingPage}/>
           <Route exact path="/create" component={CreateEvent}/>
-          <Route exact path="/event/:number" component={EventMap}/>
-          <Route exact path="/submit" component={LoadingPage}/>
-          <Route exact path="/eventList/:name/:number" component={EventList}/>
+          <Route exact path="/event/:number" component={EventMap}/>   
+          <Route exact path="/submit" component={LoadingPage}/>  
         </Switch>
       </main>
     );

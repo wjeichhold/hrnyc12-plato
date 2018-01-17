@@ -57,7 +57,7 @@ class LandingPage extends React.Component {
         Enter your event ID
         <input type="text" value={this.state.eventId} onChange={this.handleIdChange} />
       </label>
-      <Link to={'/event/' + this.state.eventId}><RaisedButton primary={true}>Submit</RaisedButton></Link>
+      <Link to={'/event/' + this.state.eventId}><RaisedButton primary='true'>Submit</RaisedButton></Link>
       <h3>Or see a list of all the events you've made so far</h3>
       <label>
         Enter your name
