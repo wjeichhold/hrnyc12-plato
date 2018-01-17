@@ -77,21 +77,20 @@ token.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
 
 const client = require('twilio')(keys.config.twilioAcct, keys.config.twilioAPI);
 
-
-// var twilioText = (user) => {
-//   console.log('userObj',user);
-//   client.messages.create({
-//         to: `+1${user.attributes.phoneNumber}`,
-//         from: '+16174405251',
-//         body: `Hey ${user.attributes.firstName} ${user.attributes.lastName}, you've been invited to my event. Please click on the link below to share your location:
-//         https://wayn-greenfield.herokuapp.com/#/event/${user.attributes.eventId}?userId=${user.id}`,
-//     })
-//     .then((message) => console.log('testing', message.sid))
-//     .catch((err) => {
-//       console.error('Could not notify administrator');
-//       console.error(err);
-//     });
-// };
+var twilioText = (user) => {
+   console.log('userObj',user);
+   client.messages.create({
+         to: `+1${user.attributes.phoneNumber}`,
+        from: '+16174405251',
+        body: `Hey ${user.attributes.firstName} ${user.attributes.lastName}, you've been invited to my event. Please click on the link below to share your location:
+        https://wayn-greenfield.herokuapp.com/#/event/${user.attributes.eventId}?userId=${user.id}`,
+    })
+    .then((message) => console.log('testing', message.sid))
+    .catch((err) => {
+      console.error('Could not notify administrator');
+      console.error(err);
+    });
+};
 
 app.post('/userEvents', (req, res) => {
     User.query((qb) => {
