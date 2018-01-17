@@ -127,6 +127,12 @@ app.post('/eventAttendees', (req, res) => {
         eventId: evt.id
       }))
     })
+  })
+    Promise.all(promises)
+    .then((result) => {
+    res.send(result);
+  })
+})
 
 
 app.get('/event', (req, res) => {
