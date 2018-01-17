@@ -14,6 +14,9 @@ var controller = require('../database-mysql/controllers/userController');
 var Users = require('../database-mysql/collections/users.js')
 
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 var port = process.env.PORT || 3000;
 
 app.use(morgan('dev'));
