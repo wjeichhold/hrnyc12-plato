@@ -31,8 +31,7 @@ app.post('/openTable', (req, res) => {
 
 app.post('/server/lyft', (req, res) => {
   console.log(req.body)
-  console.log('i got the keys keys keys', keys)
-  
+
   var headers = {
     'Content-Type': 'application/json'
 };
@@ -52,7 +51,7 @@ var token = axios.create({
 token.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
   var USER_TOKEN = data.data.access_token
   console.log('TOLKEN', USER_TOKEN)
-  var AuthStr = 'Bearer '.concat(USER_TOKEN); 
+  var AuthStr = 'Bearer '.concat(USER_TOKEN);
 // ?end_lng=-74.0101&start_lng=-73.9764&end_lat=40.7066&start_lat=40.7505
   var lyft = axios.create({
     headers: { Authorization: AuthStr },
