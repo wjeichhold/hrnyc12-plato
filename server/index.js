@@ -251,6 +251,9 @@ app.post('/event', (req, res) => {
     .then(() => res.sendStatus(200));
 });
 
+io.on('connection', (socket) => {
+  console.log('a user connected');
+});
 
 app.listen(port, function() {
   console.log('listening on port,', port);
