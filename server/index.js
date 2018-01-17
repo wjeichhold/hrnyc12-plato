@@ -29,6 +29,7 @@ app.post('/user', (req, res) => controller.post(req, res, twilioText));
 
 app.post('/server/lyft', (req, res) => {
   console.log(req.body)
+  console.log('i got the keys keys keys', keys)
   
   var headers = {
     'Content-Type': 'application/json'
@@ -36,17 +37,17 @@ app.post('/server/lyft', (req, res) => {
 
 var dataString = {"grant_type": "client_credentials", "scope": "public"};
 
-var test = axios.create({
+var token = axios.create({
     headers: headers,
     auth: {
-        username: keys.lyftUser,
-        password: keys.lyftPass
+        username: keys.config.lyftUser,
+        password: keys.config.lyftPass
     }
 })
 
 
 
-test.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
+token.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
   var USER_TOKEN = data.data.access_token
   console.log('TOLKEN', USER_TOKEN)
   var AuthStr = 'Bearer '.concat(USER_TOKEN); 
@@ -72,7 +73,7 @@ test.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
 
 })
 
-const client = require('twilio')(keys.twilioAcct, keys.twilioAPI);
+const client = require('twilio')(keys.config.twilioAcct, keys.config.twilioAPI);
 
 // below would actually be put inside the post, but I used the test route to make sure this worked
 
