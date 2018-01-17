@@ -38,8 +38,8 @@ var dataString = {"grant_type": "client_credentials", "scope": "public"};
 var test = axios.create({
     headers: headers,
     auth: {
-        username: 'mcGXiF0snpMA',
-        password: 'LbAsGZQk91aN3jZ1kpkjI6OyCktx-N0e'
+        username: keys.lyftUser,
+        password: keys.lyftPass
     }
 })
 
@@ -71,7 +71,7 @@ test.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
 
 })
 
-// const client = require('twilio')(keys.twilioAcct, keys.twilioAPI);
+const client = require('twilio')(keys.twilioAcct, keys.twilioAPI);
 
 // below would actually be put inside the post, but I used the test route to make sure this worked
 
