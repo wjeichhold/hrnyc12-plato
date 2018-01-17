@@ -11,7 +11,6 @@ class EventItem extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("NORMAL PROPS", this.props, "NEXT PROPS", nextProps)
     this.setState({
       attendees: nextProps.attendees
     });
