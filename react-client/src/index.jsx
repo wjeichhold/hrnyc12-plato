@@ -22,7 +22,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={LandingPage}/>
           <Route exact path="/create" component={CreateEvent}/>
-          <Route exact path="/event/:number" component={EventMap}/>
+          <Route exact path="/event/:number/:userName" component={EventMap}/>
           <Route exact path="/submit" component={LoadingPage}/>
           <Route exact path="/eventList/:name/:number" component={EventList}/>
         </Switch>

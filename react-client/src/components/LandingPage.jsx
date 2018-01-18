@@ -10,11 +10,19 @@ class LandingPage extends React.Component {
     this.state = {
       eventId: '',
       name: '',
+      userName: '',
       number: ''
     }
     this.handleIdChange = this.handleIdChange.bind(this);
     this.handleNumberChange = this.handleNumberChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleUserNameChange = this.handleUserNameChange.bind(this);
+  }
+
+  handleUserNameChange(e) {
+    this.setState({
+      userName: e.target.value
+    });
   }
 
   handleIdChange (e) {
@@ -54,10 +62,12 @@ class LandingPage extends React.Component {
       <Link to='/create'><RaisedButton primary={true}>Get Started</RaisedButton></Link>
       <h3>Already invited?</h3>
       <label>
+        Enter your name
+        <input type="text" value={this.state.userName} onChange={this.handleUserNameChange} />
         Enter your event ID
         <input type="text" value={this.state.eventId} onChange={this.handleIdChange} />
       </label>
-      <Link to={'/event/' + this.state.eventId}><RaisedButton primary={true}>Submit</RaisedButton></Link>
+      <Link to={'/event/' + this.state.eventId + '/' + this.state.userName}><RaisedButton primary={true}>Submit</RaisedButton></Link>
       <h3>Or see a list of all the events you've made so far</h3>
       <label>
         Enter your name
