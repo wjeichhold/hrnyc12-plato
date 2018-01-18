@@ -41,6 +41,7 @@ class EventList extends React.Component {
       response.data.forEach((item) => {
         arr = arr.concat(item);
       })
+      console.log(arr);
       this.setState({
         enteredUsersEvents: arr
       });
