@@ -1,6 +1,8 @@
 import React from 'react';
 import io from '../../../node_modules/socket.io-client/dist/socket.io.js'
 import $ from 'jquery';
+import Infinite from 'react-infinite';
+import MessageItem from './MessageItem.jsx';
 const socket = io();
 
 class ChatWindow extends React.Component {
@@ -8,7 +10,8 @@ class ChatWindow extends React.Component {
     super(props);
     this.state = {
       messages: [],
-      room: this.props.eventId
+      room: this.props.eventId,
+      divHeights: []
     }
     this.clickHandler = this.clickHandler.bind(this);
   }
@@ -18,10 +21,15 @@ class ChatWindow extends React.Component {
       socket.emit('room', this.state.room);
     })
     socket.on('chat message', (msg) => {
-      console.log('how many times?', msg);
-      $('#messages').append($('<li>').text(msg));
-      $('#messages').animate({scrollTop: $('#messages').prop('scrollHeight')}, 500);
-    })
+      let heights = [];
+      let holder = this.state.messages;
+      holder.forEach(item => heights.push(0));
+      holder.push(msg);
+      heights.push(111);
+      this.setState({
+        messages: holder
+      });
+    });
   }
 
   clickHandler(e) {
@@ -32,11 +40,16 @@ class ChatWindow extends React.Component {
 
   render() {
     return(
-      <div style={{"outline": "#00FF00 solid thick", "float": "right", "width": "50%", "display": "block", "padding-top": "50%", "overflowY": "auto"}}>
-        <ul id="messages" style={{'listStyleType': 'none', 'margin': 0, "height": "100%", 'padding': 0}}></ul>
-        <form action="" style={{'background': '#F0F8FF', 'padding': '3px', 'position': 'relative'}}>
+      <div style={{"outline": "#0007 solid thick", "float": "right", "width": "300px", "display": "block", "paddingTop": "1%", "paddingLeft": "1%"}}>
+        <Infinite containerHeight={300} elementHeight={30} style={{'listStyleType': 'none', 'margin': 0, 'padding': 0}}
+          displayBottomUpwards>
+          {this.state.messages.map((item, key) => {
+            return <MessageItem message={item} key={key}/>
+          })}
+        </Infinite>
+        <form action="" style={{"paddingTop": "2%", "position": "static"}}>
           <input id="m" autoComplete="off"></input>
-          <button onClick={this.clickHandler}>Send</button>
+          <button style={{"position": "static"}} onClick={this.clickHandler}>Send</button>
         </form>
       </div>
     )
