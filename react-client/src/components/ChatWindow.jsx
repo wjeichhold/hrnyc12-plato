@@ -1,9 +1,7 @@
 import React from 'react';
 import io from '../../../node_modules/socket.io-client/dist/socket.io.js'
-import $ from 'jquery';
 import Infinite from 'react-infinite';
 import MessageItem from './MessageItem.jsx';
-const socket = io();
 
 class ChatWindow extends React.Component {
   constructor(props) {
@@ -11,31 +9,39 @@ class ChatWindow extends React.Component {
     this.state = {
       messages: [],
       room: this.props.eventId,
-      divHeights: []
+      message: '',
+      socket: io()
     }
     this.clickHandler = this.clickHandler.bind(this);
+    this.keyPressHandler = this.keyPressHandler.bind(this);
   }
 
   componentDidMount() {
-    socket.on('connect', () => {
-      socket.emit('room', this.state.room);
-    })
-    socket.on('chat message', (msg) => {
-      let heights = [];
-      let holder = this.state.messages;
-      holder.forEach(item => heights.push(0));
-      holder.push(msg);
-      heights.push(111);
-      this.setState({
-        messages: holder
+      this.state.socket.on('connect', () => {
+        console.log("connected!!!!")
+        this.state.socket.emit('room', this.state.room);
+      })
+      this.state.socket.on('chat message', (msg) => {
+        console.log("MESSAGE:", msg);
+        let holder = this.state.messages;
+        holder.push(msg);
+        this.setState({
+          messages: holder
+        });
       });
-    });
   }
 
   clickHandler(e) {
-    console.log("THIS",this);
-    socket.emit('chat message', $('#m').val());
-    $('#m').val('');
+    this.state.socket.emit('chat message', this.refs.userInput.value)
+      this.refs.userInput.value = '';
+      console.log("REFS IN CLICK HANDLER",this.refs.userInput.value);
+  }
+
+  keyPressHandler(e) {
+    if (e.key === 'Enter') {
+      this.state.socket.emit('chat message', this.refs.userInput.value)
+      this.refs.userInput.value = '';
+    }
   }
 
   render() {
@@ -47,10 +53,10 @@ class ChatWindow extends React.Component {
             return <MessageItem message={item} key={key}/>
           })}
         </Infinite>
-        <form action="" style={{"paddingTop": "2%", "position": "static"}}>
-          <input id="m" autoComplete="off"></input>
+        <div style={{"paddingTop": "2%", "position": "static"}} onKeyUp={this.keyPressHandler}>
+          <input ref="userInput" autoComplete="off"></input>
           <button style={{"position": "static"}} onClick={this.clickHandler}>Send</button>
-        </form>
+        </div>
       </div>
     )
   }
