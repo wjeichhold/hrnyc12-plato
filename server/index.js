@@ -179,13 +179,14 @@ io.on('connection', (socket) => {
 
 io.on('connection', function(socket) {
   let roomName = '';
-  console.log('a user is connected');
+  console.log('server: a user is connected');
   socket.on('room', (room) => {
     console.log('what room we in?', room)
     roomName = room;
     socket.join(room);
   });
   socket.on('chat message', function(msg) {
+    console.log("MESSAGE", msg);
     io.sockets.in(roomName).emit('chat message', msg);
   });
   socket.on('disconnect', function(socket) {
