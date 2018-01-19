@@ -1,5 +1,7 @@
-import React from 'react'
-import AttendeeList from './AttendeeList.jsx';
+;import React from 'react'
+import { withStyles } from 'material-ui/styles';
+import Card, { CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import Button from 'material-ui/FlatButton';
 
 class EventItem extends React.Component {
   constructor(props) {
@@ -13,21 +15,30 @@ class EventItem extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.attendees.length === 0) {
       console.log('no attendees')
+    } else {
+      this.setState({
+        attendees: nextProps.attendees
+      });
     }
-    this.setState({
-      attendees: nextProps.attendees
-    });
   }
 
   render() {
     return (
-      <div>
-        <div style={{"display": "block", "textAlign": "left", "outline": "#000 solid thick", "width": "30%", "backgroundColor": "#96B3D3"}}>
-          <h1 style={{"paddingLeft": "10%"}}>{this.state.eventName}</h1>
-          <h4 style={{"paddingLeft": "10%"}}> Current Attendees: </h4>
-        </div>
-        {console.log("PROPS ATTENDEES",this.state.attendees)}
-        <AttendeeList attendees={this.state.attendees}/>
+      <div style={{"paddingTop": "2%"}}>
+        <Card style={{"width": "30vw", "transitionDuration": "0.3s", "margin": "auto", "padding": "10px"}}>
+          <CardTitle title={this.state.eventName} subtitle="Attendees"></CardTitle>
+            {this.state.attendees.map((item, key) => {
+              if (item.firstName === null || item.lastName === null || item.phoneNumber === null) {
+                console.log('whoops');
+              } else {
+                return (
+                  <div style={{"textAlign": "left"}} key={key}>
+                    <CardHeader style={{"width": "100%"}} avatar="" title={item.firstName + ' ' + item.lastName + ' | ' + item.phoneNumber}></CardHeader>
+                  </div>
+                )
+              }
+            })}
+        </Card>
       </div>
     )
   }
