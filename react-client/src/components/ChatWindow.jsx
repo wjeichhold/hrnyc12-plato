@@ -7,6 +7,7 @@ class ChatWindow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: this.props.username,
       messages: [],
       room: this.props.eventId,
       message: '',
@@ -32,14 +33,14 @@ class ChatWindow extends React.Component {
   }
 
   clickHandler(e) {
-    this.state.socket.emit('chat message', this.refs.userInput.value)
+    this.state.socket.emit('chat message', this.state.username + ': ' + this.refs.userInput.value)
       this.refs.userInput.value = '';
       console.log("REFS IN CLICK HANDLER",this.refs.userInput.value);
   }
 
   keyPressHandler(e) {
     if (e.key === 'Enter') {
-      this.state.socket.emit('chat message', this.refs.userInput.value)
+      this.state.socket.emit('chat message', this.state.username + ': ' + this.refs.userInput.value)
       this.refs.userInput.value = '';
     }
   }
