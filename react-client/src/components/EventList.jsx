@@ -47,7 +47,6 @@ class EventList extends React.Component {
       response.data.forEach((item) => {
         arr = arr.concat(item);
       })
-      console.log(arr);
       this.setState({
         enteredUsersEvents: arr
       });
@@ -63,7 +62,7 @@ class EventList extends React.Component {
       enteredUsersEvents: this.state.enteredUsersEvents
     })
     .then((response) => {
-      console.log('GET ATTENDEES RESPONSE', response.data);
+      console.log("CLIENT SIDE RESPONSE:", response.data);
       this.setState({
         attendees: response.data
       });
@@ -77,7 +76,6 @@ class EventList extends React.Component {
     return (
       <div>
         {this.state.enteredUsersEvents.map((item, ind) => {
-          console.log("ATTENDEES", this.state.attendees[ind]);
           return <EventItem evt={item} attendees={this.state.attendees[ind]} key={ind}/>
         })}
       </div>

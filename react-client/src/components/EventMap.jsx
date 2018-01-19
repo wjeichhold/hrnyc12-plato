@@ -140,8 +140,7 @@ class EventMap extends React.Component {
         margin: 20,
         textAlign: 'center',
         display: 'inline-block',
-        padding: 5,
-        marginLeft: '18%'
+        padding: 5
       }
     }
     const styles = theme => ({

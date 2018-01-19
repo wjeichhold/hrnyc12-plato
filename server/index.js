@@ -182,7 +182,6 @@ app.post('/usersEvents', (req, res) => {
 
 app.post('/eventAttendees', (req, res) => {
   let promises = [];
-  console.log('made it to server event attendees')
   req.body.enteredUsersEvents.forEach((evt) => {
     User.query((qb) => {
       promises.push(qb.select('*').from('users').where({
@@ -192,6 +191,7 @@ app.post('/eventAttendees', (req, res) => {
   })
     Promise.all(promises)
     .then((result) => {
+      console.log("SERVER SIDE RESULT ATTENDEES", result);
     res.send(result);
   })
 })
