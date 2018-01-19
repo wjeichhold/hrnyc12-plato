@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var keys = require('../config.js')
+var keys = require('./config.js')
 var db = require('../database-mysql');
 var User = require('../database-mysql/models/user');
 var Event = require('../database-mysql/models/event');
@@ -11,12 +11,52 @@ var controller = require('../database-mysql/controllers/userController');
 var Users = require('../database-mysql/collections/users.js')
 var axios = require('axios')
 var request = require('request');
+var firebase = require('firebase')
 
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
 
+
+firebase.initializeApp(keys.firebase)
+var database = firebase.database()
+var ref = database.ref('Rooms/tester/alex')
+
+// ref.push('testing 1233')
+// ref.set({text: 'testing123'})
+
+// ref.push({message: {
+//   user: 'Jason',
+//   text: 'stuff',
+//   time: 'Friday around 11am'
+// }})
+
+// newRef.push({name: 'test'})
+// ref.once('value')
+// .then((snapshot) => {
+//   console.log('snapshot teest number 1', snapshot.exists())
+//   console.log('snapshot teest for user', snapshot.child('user').exists())
+//   console.log('snapshot teest for message', snapshot.child('message').exists())
+//   console.log('snapshot teest for message/user', snapshot.child('message/user').exists())
+//   console.log('snapshot teest for message/user/jason', snapshot.child('message/user/Jason').exists())
+// })
+
+// ref.set({
+//   alanisawesome: {
+//     date_of_birth: "June 23, 1912",
+//     full_name: {
+//       firstName: 'Alan',
+//       lastName: 'Turing'
+//   }
+//   },
+//   gracehop: {
+//     date_of_birth: "December 9, 1906",
+//     full_name: "Grace Hopper"
+//   }
+// });
+
+// console.log('this is firebase', firebase)
 app.use(morgan('dev'));
 app.use(express.static(__dirname + '/../react-client/dist'));
 app.use(bodyParser.json());
@@ -72,6 +112,30 @@ token.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
 }).catch((err) => console.log(err))
 
 })
+
+
+app.post('/server/chatMessages', (req, res) => {
+  console.log('GETTING MESSAGES!!!')
+  var testRef = database.ref('Rooms/'+req.body.room+'/messages')
+  testRef.once("value").then((snapshot) => {
+  console.log('TESTING .valua', snapshot.val())
+  var obj = snapshot.val()
+  var messages = []
+  var keys = Object.keys(obj)
+  keys.map((val) => {
+    var test = obj[val]
+    console.log('testing123', test, val)
+    messages.push(obj[val])
+  })
+
+  console.log('here are out messages', messages)
+  res.send(messages)
+
+  })
+})
+
+
+
 
 const client = require('twilio')(keys.twilioAcct, keys.twilioAPI);
 
@@ -181,12 +245,14 @@ io.on('connection', function(socket) {
   let roomName = '';
   console.log('server: a user is connected');
   socket.on('room', (room) => {
-    console.log('what room we in?', room)
     roomName = room;
     socket.join(room);
   });
   socket.on('chat message', function(msg) {
+
     console.log("MESSAGE", msg);
+    var ref = database.ref('Rooms/'+roomName+'/messages')
+    ref.push(msg)
     io.sockets.in(roomName).emit('chat message', msg);
   });
   socket.on('disconnect', function(socket) {
