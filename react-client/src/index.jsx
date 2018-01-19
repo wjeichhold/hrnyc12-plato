@@ -9,7 +9,6 @@ import EventMap from './components/EventMap.jsx';
 import LoadingPage from './components/LoadingPage.jsx';
 import EventList from './components/EventList.jsx'
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +18,6 @@ class App extends React.Component {
     return (
       <div style={{"padding": "30px", "textAlign": "center"}}>
         <main style={{"display": "inlineBlock", "padding": "50px"}}>
-
           <Switch>
             <Route exact path="/" component={LandingPage}/>
             <Route exact path="/create" component={CreateEvent}/>
