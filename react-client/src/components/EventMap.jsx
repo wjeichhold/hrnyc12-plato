@@ -42,6 +42,7 @@ class EventMap extends React.Component {
   }
 
   handleNewAttendee (attendee) {
+    console.log('adding attendee', attendee)
     if(this.isUniqueAttendee(attendee)) {
       axios.post('/user', {
         attendee: attendee,
