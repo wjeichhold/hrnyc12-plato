@@ -51,7 +51,8 @@ class LandingPage extends React.Component {
       textAlign: 'center',
       display: 'inline-block',
       padding: 25,
-      primaryColor : '#ff5879'
+      primaryColor : '#ff5879',
+      zIndex: 1
     };
 
     return (
