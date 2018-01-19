@@ -25,7 +25,8 @@ class EventMap extends React.Component {
         lng: ''
       },
       userId: this.getUserId(),
-      eventId: this.getEventId()
+      eventId: this.getEventId(),
+      username: this.props.match.params.userName
     }
 
     this.handleNewAttendee = this.handleNewAttendee.bind(this);
@@ -157,7 +158,7 @@ class EventMap extends React.Component {
         <div style={{float:'right'}}>
         <Lyft getLyftEstimates={this.getLyftEstimates} cost={this.state.lyftCost} time={this.state.lyftTime} />
         </div>
-        <ChatWindow eventId={this.state.eventId}/>
+        <ChatWindow eventId={this.state.eventId} username={this.state.username}/>
       </Paper>
     );
   }
