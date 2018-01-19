@@ -1,6 +1,8 @@
 import React from 'react';
 import io from '../../../node_modules/socket.io-client/dist/socket.io.js'
 import Infinite from 'react-infinite';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 import MessageItem from './MessageItem.jsx';
 import axios from 'axios';
 
@@ -39,15 +41,15 @@ class ChatWindow extends React.Component {
   }
 
   clickHandler(e) {
-    this.state.socket.emit('chat message', this.state.username + ': ' + this.refs.userInput.value)
-      this.refs.userInput.value = '';
+    this.state.socket.emit('chat message', this.state.username + ': ' + this.refs.userInput.getValue())
+      this.refs.userInput.input.value = '';
       console.log("REFS IN CLICK HANDLER",this.refs.userInput.value);
   }
 
   keyPressHandler(e) {
     if (e.key === 'Enter') {
-      this.state.socket.emit('chat message', this.state.username + ': ' + this.refs.userInput.value)
-      this.refs.userInput.value = '';
+      this.state.socket.emit('chat message', this.state.username + ': ' + this.refs.userInput.getValue())
+      this.refs.userInput.input.value = '';
     }
   }
 
@@ -60,9 +62,13 @@ class ChatWindow extends React.Component {
             return <MessageItem message={item} key={key}/>
           })}
         </Infinite>
-        <div style={{"paddingTop": "2%", "position": "static"}} onKeyUp={this.keyPressHandler}>
-          <input ref="userInput" autoComplete="off"></input>
-          <button style={{"position": "static"}} onClick={this.clickHandler}>Send</button>
+        <div style={{"paddingTop": "2%", "display": "block"}} onKeyUp={this.keyPressHandler}>
+          <TextField
+            id="inputText"
+            ref="userInput"
+            label="Bootstrap"
+          />
+          <RaisedButton onClick={this.clickHandler}>Send</RaisedButton>
         </div>
       </div>
     )
