@@ -124,7 +124,6 @@ app.post('/server/chatMessages', (req, res) => {
   var keys = Object.keys(obj)
   keys.map((val) => {
     var test = obj[val]
-    console.log('testing123', test, val)
     messages.push(obj[val])
   })
 

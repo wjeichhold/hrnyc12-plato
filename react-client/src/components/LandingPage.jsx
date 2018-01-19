@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import muiThemeable from 'material-ui/styles/muiThemeable';
+import FacebookLogin from 'react-facebook-login';
 
 class LandingPage extends React.Component {
   constructor (props) {
@@ -11,12 +12,24 @@ class LandingPage extends React.Component {
       eventId: '',
       name: '',
       userName: '',
-      number: ''
+      number: '',
+      facebook: '',
+      img: null
     }
     this.handleIdChange = this.handleIdChange.bind(this);
     this.handleNumberChange = this.handleNumberChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleUserNameChange = this.handleUserNameChange.bind(this);
+    this.responseFacebook = this.responseFacebook.bind(this)
+  }
+
+  responseFacebook(response){
+    console.log('we are getting response', response)
+    var x = typeof response.picture.data;
+    console.log('url??', x, response.picture.data)
+    this.setState({facebook: response,
+      img: response.picture.data.url,
+      userName: response.name})
   }
 
   handleUserNameChange(e) {
@@ -54,6 +67,15 @@ class LandingPage extends React.Component {
       primaryColor : '#ff5879'
     };
 
+    if(this.state.facebook === ''){
+      return(<FacebookLogin
+    appId="143607479688685"
+    autoLoad={true}
+    fields="name,email,picture"
+    onClick={this.responseFacebook}
+    callback={this.responseFacebook} />)
+    }else{
+
     return (
     <div className="landingPage">
     <Paper style={style} zDepth={3}>
@@ -71,7 +93,7 @@ class LandingPage extends React.Component {
       <h3>Or see a list of all the events you've made so far</h3>
       <label>
         Enter your name
-        <input type="text" value={this.state.name} onChange={this.handleNameChange}></input>
+        <input type="text" value={this.state.userName} onChange={this.handleNameChange}></input>
         Enter your number
         <input type="text" value={this.state.number} onChange={this.handleNumberChange}></input>
       </label>
@@ -79,6 +101,7 @@ class LandingPage extends React.Component {
     </Paper>
     </div>
     )
+    }
   }
 }
 
