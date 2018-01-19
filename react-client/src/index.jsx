@@ -17,16 +17,18 @@ class App extends React.Component {
 
   render () {
     return (
-      <main>
+      <div style={{"padding": "30px", "textAlign": "center"}}>
+        <main style={{"display": "inlineBlock", "padding": "50px"}}>
 
-        <Switch>
-          <Route exact path="/" component={LandingPage}/>
-          <Route exact path="/create" component={CreateEvent}/>
-          <Route exact path="/event/:number/:userName" component={EventMap}/>
-          <Route exact path="/submit" component={LoadingPage}/>
-          <Route exact path="/eventList/:name/:number" component={EventList}/>
-        </Switch>
-      </main>
+          <Switch>
+            <Route exact path="/" component={LandingPage}/>
+            <Route exact path="/create" component={CreateEvent}/>
+            <Route exact path="/event/:number/:userName" component={EventMap}/>
+            <Route exact path="/submit" component={LoadingPage}/>
+            <Route exact path="/eventList/:name/:number" component={EventList}/>
+          </Switch>
+        </main>
+      </div>
     );
   }
 }
