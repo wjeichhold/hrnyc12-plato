@@ -5,6 +5,7 @@ import AttendeeMap from './AttendeeMap.jsx';
 import AddAttendee from './AddAttendee.jsx';
 import Paper from 'material-ui/Paper';
 import Lyft from './lyft.jsx';
+import { Link } from 'react-router-dom';
 import ChatWindow from './ChatWindow.jsx';
 
 class EventMap extends React.Component {
@@ -150,7 +151,11 @@ class EventMap extends React.Component {
 })
     return (
       <Paper style={style.paper} zDepth={2}>
-        <h1> Wayn </h1>
+        <Link to='/' style={{textDecoration: "none", "color": "#000"}}>
+          <h1>
+            <RaisedButton style={{"backgroundColor": "#FFF", "paddingLeft": "3%", "paddingRight": "3%", "paddingTop": "2%", "paddingBottom": "2%"}}>Wayn</RaisedButton>
+          </h1>
+        </Link>
         <h4> Your Event </h4>
         {this.state.users.length ? <AttendeeMap users={this.state.users} event={this.state.event} directions={[]}/>
         : <p>Map will be rendered when someone uploads their location! </p>}

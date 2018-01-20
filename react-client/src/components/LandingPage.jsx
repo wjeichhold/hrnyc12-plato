@@ -70,7 +70,7 @@ class LandingPage extends React.Component {
 
     if(this.state.facebook === ''){
       return(<FacebookLogin
-    appId="143607479688685"
+    appId="566395660371616"
     autoLoad={true}
     fields="name,email,picture"
     onClick={this.responseFacebook}
@@ -94,7 +94,7 @@ class LandingPage extends React.Component {
       <h3>Or see a list of all the events you've made so far</h3>
       <label>
         Enter your name
-        <input type="text" value={this.state.userName} onChange={this.handleNameChange}></input>
+        <input type="text" value={this.state.name} onChange={this.handleNameChange}></input>
         Enter your number
         <input type="text" value={this.state.number} onChange={this.handleNumberChange}></input>
       </label>
