@@ -17,9 +17,16 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
 
-var keyVar = process.env._firebase
+var keyVar = {apiKey: process.env._firebaseAPI,
+  authDomain: process.env._firebaseAuthDomain,
+  databaseURL: process.env._firebaseDatabaseURL,
+  projectId: process.env._firebaseProjectID,
+  storageBucket: process.env._firebaseStorageBucket,
+  messagingSenderId: process.env._firebaseMessageID
+}
 
 firebase.initializeApp(keyVar)
+  
 var database = firebase.database()
 var ref = database.ref('Rooms/tester/alex')
 
