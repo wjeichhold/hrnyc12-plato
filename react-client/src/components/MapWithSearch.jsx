@@ -1,5 +1,5 @@
 import React from 'react';
-import googleKey from '../../../config.js';
+import googleKey from '../../../server/config.js';
 const _ = require("lodash");
 const { compose, withProps, lifecycle } = require("recompose");
 const { withScriptjs, withGoogleMap, GoogleMap, Marker} = require("react-google-maps");

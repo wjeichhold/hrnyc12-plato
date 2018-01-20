@@ -35,16 +35,19 @@ class EventMap extends React.Component {
     this.getServerData = this.getServerData.bind(this)
     this.getLyftEstimates = this.getLyftEstimates.bind(this)
     this.getUserLocation();
-    this.getLyftEstimates()
   }
 
   componentDidMount () {
     this.getServerData();
     setInterval(this.getServerData, 1000 * 30);
   }
+  componentDidUpdate(){
+    if(this.state.users.length > 0){
+      this.getLyftEstimates()
+    }
+  }
 
   handleNewAttendee (attendee) {
-    console.log('adding attendee', attendee)
     if(this.isUniqueAttendee(attendee)) {
       axios.post('/user', {
         attendee: attendee,
@@ -73,8 +76,8 @@ class EventMap extends React.Component {
       }
     })
     .then((response) => {
-      console.log(response.data);
-      console.log(response.data.users[0]);
+      console.log('GETTING SERVER DATA', response.data);
+      console.log('TEST THIS BITCH', response.data.users[0]);
       this.setState({
         event: response.data.event,
         users: response.data.users
@@ -98,8 +101,8 @@ class EventMap extends React.Component {
   getLyftEstimates() {
     var payload = {
       user : {
-        lat : this.state.userLocation.lat,
-        lng : this.state.userLocation.lng
+        lat : this.state.users[0].latitude,
+        lng : this.state.users[0].longitude
       },
       event : {
         lat : this.state.event.eventLatitude,
@@ -108,7 +111,7 @@ class EventMap extends React.Component {
     }
 
     axios.post('/server/lyft', payload).then((data) => {
-      console.log('hiya', this)
+      console.log('lyft data', data)
       var cost = data.data.cost_estimates[2].estimated_cost_cents_max
       var time = data.data.cost_estimates[2].estimated_duration_seconds
       this.setState({lyftCost: cost, lyftTime: time})
@@ -137,7 +140,7 @@ class EventMap extends React.Component {
   }
 
   render () {
-    console.log('where is this props coming form!?????', this.props)
+    console.log('what is the state of affairs', this.state)
     let style = {
       paper : {
         margin: 20,
@@ -158,7 +161,7 @@ class EventMap extends React.Component {
             <RaisedButton style={{"backgroundColor": "#FFF", "paddingLeft": "3%", "paddingRight": "3%", "paddingTop": "2%", "paddingBottom": "2%"}}>Wayn</RaisedButton>
           </h1>
         </Link>
-        <h4> Your Event </h4>
+        <h4> {this.state.event.eventName} </h4>
         {this.state.users.length ? <AttendeeMap users={this.state.users} event={this.state.event} directions={[]}/>
         : <p>Map will be rendered when someone uploads their location! </p>}
         <AddAttendee addNewAttendee={this.handleNewAttendee} />
