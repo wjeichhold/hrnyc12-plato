@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import FacebookLogin from 'react-facebook-login';
+import fbKey from '../../../config.js';
  
 const responseFacebook = (response) => {
   console.log(response);
@@ -8,7 +9,7 @@ const responseFacebook = (response) => {
  
 ReactDOM.render(
   <FacebookLogin
-    appId="143607479688685"
+    appId={fbKey.facebookId}
     autoLoad={true}
     fields="name,email,picture"
     onClick={responseFacebook}
