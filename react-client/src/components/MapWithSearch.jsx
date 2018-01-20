@@ -4,11 +4,9 @@ const { compose, withProps, lifecycle } = require("recompose");
 const { withScriptjs, withGoogleMap, GoogleMap, Marker} = require("react-google-maps");
 const { SearchBox } = require("react-google-maps/lib/components/places/SearchBox");
 
-var gUrl = `https://maps.googleapis.com/maps/api/js?key=${process.env._googleKey}&v=3.exp&libraries=geometry,drawing,places`
-
 const MapWithASearchBox = compose(
     withProps({
-      googleMapURL: gUrl,
+      googleMapURL: 'AIzaSyCvRu9kUwcu843lpGoD2QZfJo3f7zbZR7U',
       loadingElement: <div style={{ height: `100%` }} />,
       containerElement: <div style={{ height: `400px` }} />,
       mapElement: <div style={{ height: `100%` }} />,
