@@ -14,7 +14,8 @@ class ChatWindow extends React.Component {
       messages: [],
       room: this.props.eventId,
       message: '',
-      socket: io()
+      socket: io(),
+      img: this.props.img || 'http://www.nativementor.in/images/default_trainer.jpg'
     }
     this.clickHandler = this.clickHandler.bind(this);
     this.keyPressHandler = this.keyPressHandler.bind(this);
@@ -41,25 +42,29 @@ class ChatWindow extends React.Component {
   }
 
   clickHandler(e) {
-    this.state.socket.emit('chat message', this.state.username + ': ' + this.refs.userInput.getValue())
+    this.state.socket.emit('chat message', {user: this.state.username, imgUrl: this.state.img, text: this.refs.userInput.getValue()})
       this.refs.userInput.input.value = '';
-      console.log("REFS IN CLICK HANDLER",this.refs.userInput.value);
   }
 
   keyPressHandler(e) {
     if (e.key === 'Enter') {
-      this.state.socket.emit('chat message', this.state.username + ': ' + this.refs.userInput.getValue())
+      this.state.socket.emit('chat message', {user: this.state.username, imgUrl: this.state.img, text: this.refs.userInput.getValue()})
       this.refs.userInput.input.value = '';
     }
   }
 
   render() {
+    console.log('Is my pretty face in here???', this.props)
     return(
       <div style={{"outline": "#0007 solid thick", "float": "right", "width": "300px", "display": "block", "paddingTop": "1%", "paddingLeft": "1%"}}>
         <Infinite containerHeight={300} elementHeight={30} style={{'listStyleType': 'none', 'margin': 0, 'padding': 0}}
           displayBottomUpwards>
           {this.state.messages.map((item, key) => {
-            return <MessageItem message={item} key={key}/>
+            var color = 'white'
+            if(item.user === this.state.username){
+              color = 'rgba(173,216,230, 0.6)'
+            }
+            return (<MessageItem message={item.text} key={key} user={item.user} img={item.imgUrl} clr={color} />)
           })}
         </Infinite>
         <div style={{"paddingTop": "2%", "display": "block"}} onKeyUp={this.keyPressHandler}>

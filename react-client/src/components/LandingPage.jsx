@@ -22,6 +22,7 @@ class LandingPage extends React.Component {
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleUserNameChange = this.handleUserNameChange.bind(this);
     this.responseFacebook = this.responseFacebook.bind(this)
+    this.handleButtonClick = this.handleButtonClick.bind(this)
   }
 
   responseFacebook(response){
@@ -32,7 +33,7 @@ class LandingPage extends React.Component {
       img: response.picture.data.url,
       userName: response.name,
       name: response.name
-    }, () => {this.props.grabUrl(response.picture.data.url)})
+    })
   }
 
   handleUserNameChange(e) {
@@ -57,6 +58,11 @@ class LandingPage extends React.Component {
     this.setState({
       name: e.target.value
     })
+  }
+
+  handleButtonClick(e) {
+    console.log('buttton clciked???', e)
+    this.props.grabUrl(this.state.img, this.state. userName, this.state.eventId)
   }
 
   render () {
@@ -93,7 +99,7 @@ class LandingPage extends React.Component {
         Enter your event ID
         <input type="text" value={this.state.eventId} onChange={this.handleIdChange} />
       </label>
-      <Link to={'/event/' + this.state.eventId + '/' + this.state.userName}><RaisedButton primary={true}>Submit</RaisedButton></Link>
+      <Link to={'/event/' + this.state.eventId + '/' + this.state.userName}><RaisedButton onClick={this.handleButtonClick} primary={true}>Submit</RaisedButton></Link>
       <h3>Or see a list of all the events you've made so far</h3>
       <label>
         Enter your name
@@ -101,7 +107,7 @@ class LandingPage extends React.Component {
         Enter your number
         <input type="text" value={this.state.number} onChange={this.handleNumberChange}></input>
       </label>
-      <Link to={'/eventList/' + this.state.name + '/' + this.state.number}><RaisedButton primary={true}>Submit</RaisedButton></Link>
+      <RaisedButton onClick={this.handleButtonClick} primary={true}>Submit</RaisedButton>
     </Paper>
     </div>
     )

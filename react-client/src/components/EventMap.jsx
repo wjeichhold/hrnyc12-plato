@@ -25,9 +25,10 @@ class EventMap extends React.Component {
         lat: '',
         lng: ''
       },
-      userId: this.getUserId(),
-      eventId: this.getEventId(),
-      username: this.props.match.params.userName
+      userId: '',
+      eventId: this.props.eventId,
+      username: this.props.userName,
+      imgUrl: this.props.imgUrl
     }
 
     this.handleNewAttendee = this.handleNewAttendee.bind(this);
@@ -115,7 +116,7 @@ class EventMap extends React.Component {
   }
 
   getUserId () {
-    return this.props.location.search.replace('?userId=', '');
+    // return this.props.location.search.replace('?userId=', '');
   }
 
   getUserLocation () {
@@ -136,6 +137,7 @@ class EventMap extends React.Component {
   }
 
   render () {
+    console.log('where is this props coming form!?????', this.props)
     let style = {
       paper : {
         margin: 20,
@@ -163,7 +165,7 @@ class EventMap extends React.Component {
         <div style={{float:'right'}}>
         <Lyft getLyftEstimates={this.getLyftEstimates} cost={this.state.lyftCost} time={this.state.lyftTime} />
         </div>
-        <ChatWindow eventId={this.state.eventId} username={this.state.username}/>
+        <ChatWindow eventId={this.state.eventId} username={this.state.username} img={this.state.imgUrl}/>
       </Paper>
     );
   }

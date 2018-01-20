@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-import { Switch, Route, HashRouter } from 'react-router-dom';
+import { Redirect } from 'react-router'
+import { Switch, Route, HashRouter} from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import LandingPage from './components/LandingPage.jsx';
 import CreateEvent from './components/CreateEvent.jsx';
@@ -17,12 +18,16 @@ class App extends React.Component {
       imgUrl: ''
     }
     this.landingPageFactory = this.landingPageFactory.bind(this)
+    this.eventMapFactory = this.eventMapFactory.bind(this)
     this.grabUrl = this.grabUrl.bind(this)
   }
 
-  grabUrl(url) {
+  grabUrl(url, name, event) {
+    console.log('how many times???')
     this.setState({
-      imgUrl: url
+      imgUrl: url,
+      Username: name,
+      eventId: event
     })
   }
 
@@ -30,6 +35,12 @@ class App extends React.Component {
   landingPageFactory() {
     return(
       <LandingPage testing={this.state.test} grabUrl={this.grabUrl} />
+      )
+  }
+
+  eventMapFactory() {
+    return(
+      <EventMap imgUrl={this.state.imgUrl} userName={this.state.Username} eventId={this.state.eventId} />
       )
   }
 
@@ -41,7 +52,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" render={this.landingPageFactory}/>
             <Route exact path="/create" component={CreateEvent}/>
-            <Route exact path="/event/:number/:userName" component={EventMap}/>
+            <Route exact path="/event/:number/:userName" render={this.eventMapFactory}/>
             <Route exact path="/submit" component={LoadingPage}/>
             <Route exact path="/eventList/:name/:number" component={EventList}/>
           </Switch>
