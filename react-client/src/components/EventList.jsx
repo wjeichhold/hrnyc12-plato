@@ -17,8 +17,14 @@ class EventList extends React.Component {
   }
 
   componentDidMount() {
+    var x = this.state.name.indexOf(' ')
+    if(x >= 0){
+    var firstName = this.state.name.slice(0, x)
+    } else{
+      firstName = this.state.name
+    }
     axios.post('/userEvents', {
-      name: this.state.name,
+      name: firstName,
       number: this.state.number
     })
     .then((response) => {
