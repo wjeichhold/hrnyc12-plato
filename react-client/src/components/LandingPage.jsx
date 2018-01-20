@@ -32,7 +32,7 @@ class LandingPage extends React.Component {
       img: response.picture.data.url,
       userName: response.name,
       name: response.name
-    })
+    }, () => {this.props.grabUrl(response.picture.data.url)})
   }
 
   handleUserNameChange(e) {
@@ -60,7 +60,6 @@ class LandingPage extends React.Component {
   }
 
   render () {
-    console.log(fbKey)
     const style = {
       // height: 100,
       // width: 100,
