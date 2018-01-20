@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import EventItem from './EventItem.jsx'
+import RaisedButton from 'material-ui/RaisedButton';
+import { Link } from 'react-router-dom';
 
 class EventList extends React.Component {
   constructor(props) {
@@ -75,6 +77,11 @@ class EventList extends React.Component {
   render() {
     return (
       <div>
+        <Link to='/' style={{textDecoration: "none", "color": "#000"}}>
+          <h1>
+            <RaisedButton style={{"backgroundColor": "#FFF", "paddingLeft": "2%", "paddingRight": "2%", "paddingTop": "1%", "paddingBottom": "1%"}}>Wayn</RaisedButton>
+          </h1>
+        </Link>
         {this.state.enteredUsersEvents.map((item, ind) => {
           return <EventItem evt={item} attendees={this.state.attendees[ind]} key={ind}/>
         })}
