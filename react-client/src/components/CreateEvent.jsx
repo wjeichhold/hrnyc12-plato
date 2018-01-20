@@ -78,20 +78,7 @@ class CreateEvent extends React.Component {
       this.setState({
         submitted: true
       }, () => {
-        let infoToPost = this.state;
-
-        // Add organizer as an attendee of event, then remove those properties from infoToPost
-        infoToPost.attendees.push({
-          firstName: this.state.organizerFirstName,
-          lastName: this.state.organizerLastName,
-          phoneNumber: this.state.organizerPhoneNumber
-        });
-
-        delete infoToPost.organizerFirstName;
-        delete infoToPost.organizerLastName;
-        delete infoToPost.organizerPhoneNumber;
         
-        console.log('Submitting, contents of state:', infoToPost);
         axios.post('/event', this.state)
         .then((response) => this.props.history.push('/submit'))
         .catch((error) => {
@@ -162,7 +149,7 @@ class CreateEvent extends React.Component {
             Time:
             <input type="time" value={this.state.time} onChange={this.handleTimeChange} required/>
           </label>
-          <a href={this.state.resLink} style={{paddingleft: '30px'}}>Book a reservation!</a>
+          <a target="_blank" href={this.state.resLink} style={{paddingleft: '30px'}}>Book a reservation!</a>
           <img style={{width:'80px', height:'auto', paddingTop: '10px', paddingLeft:'15px'}} src='https://assets.brandfolder.com/o3omnr-9qhjhc-eg4b40/v/411576/view.png'/>
           <br/>
           <MapWithSearchBox getEventCoordinate={this.handleLocationChange} setLocale={this.setLocale}/>
