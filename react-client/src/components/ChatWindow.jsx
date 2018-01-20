@@ -4,6 +4,7 @@ import Infinite from 'react-infinite';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import MessageItem from './MessageItem.jsx';
+import axios from 'axios';
 
 class ChatWindow extends React.Component {
   constructor(props) {
@@ -32,6 +33,11 @@ class ChatWindow extends React.Component {
           messages: holder
         });
       });
+
+      axios.post('/server/chatMessages', {room: this.state.room}).then((data) => {
+        console.log('DID WE ACCESSS DAT SUPER HOT FIRE', data)
+        this.setState({messages: data.data})
+      })
   }
 
   clickHandler(e) {
