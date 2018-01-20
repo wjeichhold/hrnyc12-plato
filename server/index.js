@@ -1,7 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var keys = require('../config.js')
+var keys = require('./config.js')
 var db = require('../database-mysql');
 var User = require('../database-mysql/models/user');
 var Event = require('../database-mysql/models/event');
@@ -72,6 +72,7 @@ app.post('/openTable', (req, res) => {
   })
 
 app.post('/server/lyft', (req, res) => {
+  console.log('heres the shiittttt we neeeeeddddd', req.body)
   var headers = {
     'Content-Type': 'application/json'
 };
@@ -84,6 +85,7 @@ var token = axios.create({
         username: keys.lyftUser,
         password: keys.lyftPass
     }
+
 })
 
 
@@ -95,15 +97,15 @@ token.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
   var lyft = axios.create({
     headers: { Authorization: AuthStr },
     params: {
-      start_lat: 40.7505,
-      start_lng: -73.9764,
-      end_lat: 40.7066,
-      end_lng: -74.0101,
+      start_lat: req.body.user.lat,
+      start_lng: req.body.user.lng,
+      end_lat: req.body.event.lat,
+      end_lng: req.body.event.lng,
     }
   })
 
   lyft.get('https://api.lyft.com/v1/cost').then((data) => {
-    // console.log('did we get cool stuff?', data.data)
+
     res.send(data.data)
   }).catch((err) => {
     console.log(err)
@@ -115,10 +117,9 @@ token.post('https://api.lyft.com/oauth/token', dataString).then((data) => {
 
 
 app.post('/server/chatMessages', (req, res) => {
-  console.log('GETTING MESSAGES!!!')
   var testRef = database.ref('Rooms/'+req.body.room+'/messages')
   testRef.once("value").then((snapshot) => {
-  console.log('TESTING .valua', snapshot.val())
+  // console.log('TESTING .valua', snapshot.val())
   var obj = snapshot.val()
   var messages = []
   var keys = Object.keys(obj)
@@ -126,8 +127,6 @@ app.post('/server/chatMessages', (req, res) => {
     var test = obj[val]
     messages.push(obj[val])
   })
-
-  console.log('here are out messages', messages)
   res.send(messages)
 
   })
@@ -139,7 +138,7 @@ app.post('/server/chatMessages', (req, res) => {
 const client = require('twilio')(keys.twilioAcct, keys.twilioAPI);
 
 var twilioText = (user) => {
-   console.log('userObj',user);
+   // console.log('userObj',user);
    client.messages.create({
          to: `+1${user.attributes.phoneNumber}`,
         from: '+16174405251',
@@ -214,7 +213,6 @@ app.get('/event', (req, res) => {
 
 
 app.post('/event', (req, res) => {
-  console.log('data from the client', req.body);
   let organizer = {
     firstName: req.body.organizerFirstName,
     lastName: req.body.organizerLastName,
@@ -230,7 +228,7 @@ app.post('/event', (req, res) => {
 
   let attendees = req.body.attendees;
   attendees.push(organizer);
-  console.log('the attendees should include the organizer', attendees);
+  // console.log('the attendees should include the organizer', attendees);
 
   controller.insert(attendees, event, twilioText)
     .then(() => res.sendStatus(200));
@@ -249,7 +247,7 @@ io.on('connection', function(socket) {
   });
   socket.on('chat message', function(msg) {
 
-    console.log("MESSAGE", msg);
+    // console.log("MESSAGE", msg);
     var ref = database.ref('Rooms/'+roomName+'/messages')
     ref.push(msg)
     io.sockets.in(roomName).emit('chat message', msg);

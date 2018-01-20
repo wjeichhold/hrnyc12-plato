@@ -4,7 +4,7 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import FacebookLogin from 'react-facebook-login';
-import fbKey from '../../../config.js';
+import fbKey from '../../../server/config.js';
 
 class LandingPage extends React.Component {
   constructor (props) {
@@ -82,7 +82,6 @@ class LandingPage extends React.Component {
     appId={fbKey.facebookId}
     autoLoad={true}
     fields="name,email,picture"
-    onClick={this.responseFacebook}
     callback={this.responseFacebook} />)
     }else{
 
@@ -107,7 +106,7 @@ class LandingPage extends React.Component {
         Enter your number
         <input type="text" value={this.state.number} onChange={this.handleNumberChange}></input>
       </label>
-      <RaisedButton onClick={this.handleButtonClick} primary={true}>Submit</RaisedButton>
+      <Link to={'/eventList/' + this.state.name + '/' + this.state.number}><RaisedButton onClick={this.handleButtonClick} primary={true}>Submit</RaisedButton></Link>
     </Paper>
     </div>
     )
