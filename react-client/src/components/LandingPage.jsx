@@ -73,7 +73,7 @@ class LandingPage extends React.Component {
 
     if(this.state.facebook === ''){
       return(<FacebookLogin
-    appId="143607479688685"
+    appId="566395660371616"
     autoLoad={true}
     fields="name,email,picture"
     onClick={this.responseFacebook}
