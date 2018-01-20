@@ -119,7 +119,7 @@ class EventMap extends React.Component {
   }
 
   getUserId () {
-    // return this.props.location.search.replace('?userId=', '');
+    return this.props.location.search.replace('?userId=', '');
   }
 
   getUserLocation () {
