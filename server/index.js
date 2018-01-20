@@ -1,7 +1,6 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var keys = require('./config.js')
 var db = require('../database-mysql');
 var User = require('../database-mysql/models/user');
 var Event = require('../database-mysql/models/event');
@@ -19,44 +18,10 @@ var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
 
 
-firebase.initializeApp(keys.firebase)
+firebase.initializeApp(process.env._firebase)
 var database = firebase.database()
 var ref = database.ref('Rooms/tester/alex')
 
-// ref.push('testing 1233')
-// ref.set({text: 'testing123'})
-
-// ref.push({message: {
-//   user: 'Jason',
-//   text: 'stuff',
-//   time: 'Friday around 11am'
-// }})
-
-// newRef.push({name: 'test'})
-// ref.once('value')
-// .then((snapshot) => {
-//   console.log('snapshot teest number 1', snapshot.exists())
-//   console.log('snapshot teest for user', snapshot.child('user').exists())
-//   console.log('snapshot teest for message', snapshot.child('message').exists())
-//   console.log('snapshot teest for message/user', snapshot.child('message/user').exists())
-//   console.log('snapshot teest for message/user/jason', snapshot.child('message/user/Jason').exists())
-// })
-
-// ref.set({
-//   alanisawesome: {
-//     date_of_birth: "June 23, 1912",
-//     full_name: {
-//       firstName: 'Alan',
-//       lastName: 'Turing'
-//   }
-//   },
-//   gracehop: {
-//     date_of_birth: "December 9, 1906",
-//     full_name: "Grace Hopper"
-//   }
-// });
-
-// console.log('this is firebase', firebase)
 app.use(morgan('dev'));
 app.use(express.static(__dirname + '/../react-client/dist'));
 app.use(bodyParser.json());
@@ -82,8 +47,8 @@ var dataString = {"grant_type": "client_credentials", "scope": "public"};
 var token = axios.create({
     headers: headers,
     auth: {
-        username: keys.lyftUser,
-        password: keys.lyftPass
+        username: process.env._lyftUser,
+        password: process.env._lyftPass
     }
 
 })
@@ -135,7 +100,7 @@ app.post('/server/chatMessages', (req, res) => {
 
 
 
-const client = require('twilio')(keys.twilioAcct, keys.twilioAPI);
+const client = require('twilio')(process.env._twilioAcct, process.env._twilioAPI);
 
 var twilioText = (user) => {
    // console.log('userObj',user);
@@ -143,7 +108,7 @@ var twilioText = (user) => {
          to: `+1${user.attributes.phoneNumber}`,
         from: '+16174405251',
         body: `Hey ${user.attributes.firstName} ${user.attributes.lastName}, you've been invited to my event. Please click on the link below to share your location:
-        https://wayn-greenfield.herokuapp.com/#/event/${user.attributes.eventId}?userId=${user.id}`,
+        https://cryptic-sierra-35788.herokuapp.com/#/event/${user.attributes.eventId}?userId=${user.id}`,
     })
     .then((message) => console.log('testing', message.sid))
     .catch((err) => {

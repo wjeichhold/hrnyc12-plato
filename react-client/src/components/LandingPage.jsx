@@ -4,7 +4,6 @@ import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 import FacebookLogin from 'react-facebook-login';
-import fbKey from '../../../server/config.js';
 
 class LandingPage extends React.Component {
   constructor (props) {
@@ -79,7 +78,7 @@ class LandingPage extends React.Component {
 
     if(this.state.facebook === ''){
       return(<FacebookLogin
-    appId={fbKey.facebookId}
+    appId={process.env._fbKey}
     autoLoad={true}
     fields="name,email,picture"
     callback={this.responseFacebook} />)
